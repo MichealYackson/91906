@@ -1,4 +1,4 @@
-# this is a comment
+# this is a comments
 import turtle as t
 from turtle import Turtle
 
@@ -7,32 +7,40 @@ class Questionnaire:
         self.turtle = turtle_name
 
     def start(self):
+        question = ("You are able to move the turtle by writing 'up', 'down', 'left', and 'right'.\n"+
+                    "If you want to make a point write 'point' or 'save'.\n"+
+                    "If you wish to quit the program write 'quit' or ' break'\n")
+        print(question)
+        self.questioning()
+
+    def questioning(self):
         start = True
         while start == True:
-            question = "Do you wish to make a tuple point"
-            answer = (input(question)).lower()
-            if answer == "yes":
-                self.turtle.save_tuple()
-            elif answer == "quit" or "break":
-                start = False
-                print(self.turtle)
-            else:
-                pass
-            question = "Which direction do you want to move in?"
+            question = "What do you want to do?\n"
             answer = (input(question)).lower()
             if answer == "up":
                 self.turtle.move_up()
-            elif answer == "down":
-                self.turtle.move_down()
-            elif answer == "right":
-                self.turtle.move_right()
-            elif answer == "left":
-                self.turtle.move_left()
-            elif answer == "quit" or "break":
-                start = False
-                print(self.turtle)
             else:
-                pass
+                if answer == "down":
+                    self.turtle.move_down()
+                else:
+                    if answer == "right":
+                        self.turtle.move_right()
+                    else:
+                        if answer == "left":
+                            self.turtle.move_left()
+                        else:
+                            if answer == "quit" or answer == "break":
+                                start = False
+                                quit()
+                                break
+                            else:
+                                if answer == "point" or answer == "save" or answer == "save point":
+                                    self.turtle.save_tuple()
+                                    print(self.turtle)
+                                else:
+                                    print("Sorry that input wasn't valid")
+
 
 
 class PointerTurtle:
