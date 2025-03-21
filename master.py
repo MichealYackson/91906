@@ -32,6 +32,7 @@ class Questionnaire:
                         else:
                             if answer == "quit" or answer == "break":
                                 start = False
+                                self.turtle.tuple_of_tuples()
                                 quit()
                                 break
                             else:
@@ -72,6 +73,11 @@ class PointerTurtle:
     def save_tuple(self):
         current_tuple = (self.current_x, self.current_y)
         self.tuple_list.append(current_tuple)
+
+    def tuple_of_tuples(self):
+        tuple_of_tuples = tuple(self.tuple_list)
+        print(tuple_of_tuples)
+
 
 
 if __name__ == '__main__':
