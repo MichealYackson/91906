@@ -9,7 +9,8 @@ class Questionnaire:
     def start(self):
         question = ("You are able to move the turtle by writing 'up', 'down', 'left', and 'right'.\n"+
                     "If you want to make a point write 'point' or 'save'.\n"+
-                    "If you wish to quit the program write 'quit' or ' break'\n")
+                    "If you wish to quit the program write 'quit' or ' break'\n"+
+                    "If you wish to print out the code for your tuples write 'code' or 'tuples'\n")
         print(question)
         self.questioning()
 
@@ -32,15 +33,17 @@ class Questionnaire:
                         else:
                             if answer == "quit" or answer == "break":
                                 start = False
-                                self.turtle.tuple_of_tuples()
                                 quit()
                                 break
                             else:
-                                if answer == "point" or answer == "save" or answer == "save point":
-                                    self.turtle.save_tuple()
-                                    print(self.turtle)
+                                if answer == "code" or answer == "tuples" or answer == "tuple":
+                                    self.turtle.tuple_of_tuples()
                                 else:
-                                    print("Sorry that input wasn't valid")
+                                    if answer == "point" or answer == "save" or answer == "save point":
+                                        self.turtle.save_tuple()
+                                        print(self.turtle)
+                                    else:
+                                        print("Sorry that input wasn't valid")
 
 
 
@@ -77,7 +80,6 @@ class PointerTurtle:
     def tuple_of_tuples(self):
         tuple_of_tuples = tuple(self.tuple_list)
         print(tuple_of_tuples)
-
 
 
 if __name__ == '__main__':

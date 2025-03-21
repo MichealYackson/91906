@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="added the first iteration of adding tuples on the screen and in a list, and then added to main after master" />
+    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,6 +19,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="origin/main" />
   </component>
   <component name="Git.Settings">
     <option name="PUSH_TAGS">
@@ -29,7 +35,7 @@
         <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../Python Projects" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -57,7 +63,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "trailing__first__phase",
     "last_opened_file_path": "C:/Python Projects",
     "settings.editor.selected.configurable": "preferences.customizations"
   }
@@ -126,6 +132,6 @@
     <MESSAGE value="comment" />
     <MESSAGE value="added a screen and a turtle" />
     <MESSAGE value="added the first iteration of adding tuples on the screen and in a list" />
-    <option name="LAST_COMMIT_MESSAGE" value="added the first iteration of adding tuples on the screen and in a list" />
+    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
 </project>
