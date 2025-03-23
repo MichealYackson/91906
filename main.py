@@ -89,7 +89,7 @@ class PointerTurtle:
               f'p = turtle.get_poly()\n'
               f'register_shape("myFavouriteShape", p)\n'
               f'turtle.shape("myFavouriteShape")\n'
-              f'turtle.goto(0, 0)'
+              f'turtle.goto(0, 0)\n'
               f'turtle.clear')
 
 
