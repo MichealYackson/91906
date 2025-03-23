@@ -82,6 +82,7 @@ class PointerTurtle:
         print(tuple_of_tuples)
         print(f'import turtle\n'
               f'Tuples = {tuple_of_tuples}\n'
+              f'turtle.mode("logo")\n'
               f'turtle.begin_poly()\n'
               f'for i in (Tuples):\n'
               f'    turtle.goto(i)\n'
