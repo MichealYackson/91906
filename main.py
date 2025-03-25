@@ -15,8 +15,9 @@ class Questionnaire:
         question = ("You are able to move the turtle by writing 'up', 'down', 'left', and 'right'.\n"+
                     "If you want to make a point write 'point' or 'save'.\n"+
                     "If you wish to quit the program write 'quit' or ' break'\n"+
-                    "If you wish to print out the code for your tuples write 'code' or 'tuples'\n")
-        print(question)
+                    "If you wish to print out the code for your tuples write 'code' or 'tuples'\n"
+                    "You can change the scale of the distance you travel "
+                    "(default distance is 20) at any time by typing 'scale' or 'size'\n")
         # calls the main loop of the program
         self.questioning()
 
@@ -53,6 +54,14 @@ class Questionnaire:
                                         self.turtle.save_tuple()
                                         print(self.turtle)
                                     else:
+                                        if answer == "size" or answer == "scale" or answer == "distance":
+                                            question = "What distance do you want to travel?"
+                                            answer = input(question)
+                                            if answer != int(answer):
+                                                print("Sorry that input wasn't valid")
+                                            else:
+                                                self.turtle.get_distance(answer)
+                                                print("Sorry that input wasn't valid")
                                         print("Sorry that input wasn't valid")
 
 
@@ -63,6 +72,7 @@ class PointerTurtle:
         self.pointer_turtle = Turtle()
         self.current_y = 0
         self.current_x = 0
+        self.distance = 20
         # list for the tuples that will be saved later and used else where in the class
         self.tuple_list = []
 
@@ -71,28 +81,33 @@ class PointerTurtle:
         # to show the user the points they have saved
         return str(self.tuple_list)
 
+    def get_distance(self, answer):
+            self.distance = int(answer)
+
+
     # for all of the move code since turtle does not have a change x or y code
     # I have made it variables that it remembers and adds or subtracts to move
     def move_up(self):
-        self.current_y = self.current_y + 20
+        self.current_y = self.current_y + self.distance
         self.pointer_turtle.goto(self.current_x, self.current_y)
 
     def move_down(self):
-        self.current_y = self.current_y - 20
+        self.current_y = self.current_y - self.distance
         self.pointer_turtle.goto(self.current_x, self.current_y)
 
     def move_right(self):
-        self.current_x = self.current_x + 20
+        self.current_x = self.current_x + self.distance
         self.pointer_turtle.goto(self.current_x, self.current_y)
 
     def move_left(self):
-        self.current_x = self.current_x - 20
+        self.current_x = self.current_x - self.distance
         self.pointer_turtle.goto(self.current_x, self.current_y)
 
     def save_tuple(self):
         # when saving a tuple I make the turtle make a dot of where it is
         # to remind the user where visually his shape will be
-        self.pointer_turtle.dot(10, "blue")
+        width = int(round(self.distance/2, 0))
+        self.pointer_turtle.dot(width, "blue")
         current_tuple = (self.current_x, self.current_y)
         self.tuple_list.append(current_tuple)
 
