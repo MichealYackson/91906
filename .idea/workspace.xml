@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="final version before trailing">
+    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="I'm pretty happy with this for a first decomp">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -144,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742767409674</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="I'm pretty happy with this for a first decomp">
+      <option name="closed" value="true" />
+      <created>1742861013609</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1742861013609</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,6 +175,7 @@
     <MESSAGE value="fixed up the code and now it prints out code, moving onto trailing finally" />
     <MESSAGE value="uhhh did it snap my code out of this world for whatever reason?\s." />
     <MESSAGE value="final version before trailing" />
-    <option name="LAST_COMMIT_MESSAGE" value="final version before trailing" />
+    <MESSAGE value="I'm pretty happy with this for a first decomp" />
+    <option name="LAST_COMMIT_MESSAGE" value="I'm pretty happy with this for a first decomp" />
   </component>
 </project>
