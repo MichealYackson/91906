@@ -74,6 +74,7 @@ class PointerTurtle:
         self.pointer_turtle.goto(self.current_x, self.current_y)
 
     def save_tuple(self):
+        self.pointer_turtle.dot(10, "blue")
         current_tuple = (self.current_x, self.current_y)
         self.tuple_list.append(current_tuple)
 
@@ -88,7 +89,7 @@ class PointerTurtle:
               f'    turtle.goto(i)\n'
               f'turtle.end_poly()\n'
               f'p = turtle.get_poly()\n'
-              f'register_shape("myFavouriteShape", p)\n'
+              f'turtle.register_shape("myFavouriteShape", p)\n'
               f'turtle.shape("myFavouriteShape")\n'
               f'turtle.goto(0, 0)\n'
               f'turtle.clear')
