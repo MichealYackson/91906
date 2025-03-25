@@ -19,6 +19,7 @@ class Questionnaire:
                     "You can change the scale of the distance you travel "
                     "(default distance is 20) at any time by typing 'scale' or 'size'\n")
         # calls the main loop of the program
+        print(question)
         self.questioning()
 
     def questioning(self):
@@ -55,14 +56,15 @@ class Questionnaire:
                                         print(self.turtle)
                                     else:
                                         if answer == "size" or answer == "scale" or answer == "distance":
-                                            question = "What distance do you want to travel?"
+                                            question = "What distance do you want to travel?\n"
                                             answer = input(question)
-                                            if answer != int(answer):
-                                                print("Sorry that input wasn't valid")
-                                            else:
+                                            try:
+                                                answer = int(answer)
                                                 self.turtle.get_distance(answer)
+                                            except ValueError:
                                                 print("Sorry that input wasn't valid")
-                                        print("Sorry that input wasn't valid")
+                                        else:
+                                            print("Sorry that input wasn't valid")
 
 
 # this class handles the turtle that will be used for making the shape
@@ -83,7 +85,6 @@ class PointerTurtle:
 
     def get_distance(self, answer):
             self.distance = int(answer)
-
 
     # for all of the move code since turtle does not have a change x or y code
     # I have made it variables that it remembers and adds or subtracts to move
