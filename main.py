@@ -25,7 +25,7 @@ class Questionnaire:
     def questioning(self):
         # I use a while loop with only string inputs on a large if else tree to see what they want to do
         start = True
-        while start == True:
+        while start:
             question = "What do you want to do?\n"
             answer = (input(question)).lower()
             # next 4 if else's just tell the other class handling the turtle where to move
@@ -44,7 +44,6 @@ class Questionnaire:
                             if answer == "quit" or answer == "break":
                                 start = False
                                 quit()
-                                break
                             else:
                                 if answer == "code" or answer == "tuples" or answer == "tuple":
                                     # gets the code for the user from the other class
@@ -86,7 +85,7 @@ class PointerTurtle:
     def get_distance(self, answer):
             self.distance = int(answer)
 
-    # for all of the move code since turtle does not have a change x or y code
+    # for all of this the move code since turtle does not have a change x or y code
     # I have made it variables that it remembers and adds or subtracts to move
     def move_up(self):
         self.current_y = self.current_y + self.distance
