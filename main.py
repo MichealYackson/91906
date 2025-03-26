@@ -55,7 +55,9 @@ class Questionnaire:
                                         print(self.turtle)
                                     else:
                                         if answer == "size" or answer == "scale" or answer == "distance":
+                                            # tells the turtle class how far it is allowed to move
                                             question = "What distance do you want to travel?\n"
+                                            # uses try except to avoid errors
                                             answer = input(question)
                                             try:
                                                 answer = int(answer)
@@ -83,7 +85,8 @@ class PointerTurtle:
         return str(self.tuple_list)
 
     def get_distance(self, answer):
-            self.distance = int(answer)
+        # sets distance travel to the input
+        self.distance = int(answer)
 
     # for all of this the move code since turtle does not have a change x or y code
     # I have made it variables that it remembers and adds or subtracts to move
