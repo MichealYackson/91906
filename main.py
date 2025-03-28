@@ -2,70 +2,18 @@
 import turtle as t
 from turtle import Turtle
 
-""" makes the questionnaire class used for asking what direction the user wants to
-move in and if the user wants to quit the program or if they want to makes spots
-or if they want the code using a large if else tree"""
-class Questionnaire:
+class Controller:
     def __init__(self, turtle_name):
-        #just sets the turtles name we are using for this program
         self.turtle = turtle_name
 
-    def start(self):
-        # tells the users what inputs they can use during the running of the program
-        question = ("You are able to move the turtle by writing 'up', 'down', 'left', and 'right'.\n"+
-                    "If you want to make a point write 'point' or 'save'.\n"+
-                    "If you wish to quit the program write 'quit' or ' break'\n"+
-                    "If you wish to print out the code for your tuples write 'code' or 'tuples'\n"
-                    "You can change the scale of the distance you travel "
-                    "(default distance is 20) at any time by typing 'scale' or 'size'\n")
-        # calls the main loop of the program
-        print(question)
-        self.questioning()
+    def main_loop(self):
+        screen.onkey(quit, "q")
+        screen.onkey(self.turtle.move_up,"w")
+        screen.onkey(self.turtle.move_down,"s")
+        screen.onkey(self.turtle.move_right, "d")
+        screen.onkey(self.turtle.move_left, "a")
+        screen.listen()
 
-    def questioning(self):
-        # I use a while loop with only string inputs on a large if else tree to see what they want to do
-        start = True
-        while start:
-            question = "What do you want to do?\n"
-            answer = (input(question)).lower()
-            # next 4 if else's just tell the other class handling the turtle where to move
-            if answer == "up":
-                self.turtle.move_up()
-            else:
-                if answer == "down":
-                    self.turtle.move_down()
-                else:
-                    if answer == "right":
-                        self.turtle.move_right()
-                    else:
-                        if answer == "left":
-                            self.turtle.move_left()
-                        else:
-                            if answer == "quit" or answer == "break":
-                                start = False
-                                quit()
-                            else:
-                                if answer == "code" or answer == "tuples" or answer == "tuple":
-                                    # gets the code for the user from the other class
-                                    self.turtle.tuple_of_tuples()
-                                else:
-                                    if answer == "point" or answer == "save" or answer == "save point":
-                                        # tells the other class to save the tuple they are on
-                                        self.turtle.save_tuple()
-                                        print(self.turtle)
-                                    else:
-                                        if answer == "size" or answer == "scale" or answer == "distance":
-                                            # tells the turtle class how far it is allowed to move
-                                            question = "What distance do you want to travel?\n"
-                                            # uses try except to avoid errors
-                                            answer = input(question)
-                                            try:
-                                                answer = int(answer)
-                                                self.turtle.get_distance(answer)
-                                            except ValueError:
-                                                print("Sorry that input wasn't valid")
-                                        else:
-                                            print("Sorry that input wasn't valid")
 
 
 # this class handles the turtle that will be used for making the shape
@@ -137,7 +85,8 @@ if __name__ == '__main__':
     # else the person looking at the code can snatch code from the classes
     # without running the program
     screen = t.Screen()
+    t.mode("logo")
     Turtle = PointerTurtle()
-    App = Questionnaire(Turtle)
-    App.start()
+    App = Controller(Turtle)
+    App.main_loop()
     t.mainloop()
