@@ -79,18 +79,21 @@ class PointerTurtle:
         # this just makes a tuple of the tuples so when it prints out the code
         # so the user knows not to touch it if they don't want to change the shape
         tuple_of_tuples = tuple(self.tuple_list)
-        print(f'import turtle\n'
-              f'Tuples = {tuple_of_tuples}\n'
-              f'turtle.mode("logo")\n'
-              f'turtle.begin_poly()\n'
-              f'for i in (Tuples):\n'
-              f'    turtle.goto(i)\n'
-              f'turtle.end_poly()\n'
-              f'p = turtle.get_poly()\n'
-              f'turtle.register_shape("myFavouriteShape", p)\n'
-              f'turtle.shape("myFavouriteShape")\n'
-              f'turtle.goto(0, 0)\n'
-              f'turtle.clear')
+        file = open("MyLittleTurtle.py", "w")
+        file.write(f'import turtle\n'
+                   f'Tuples = {tuple_of_tuples}\n'
+                   f'turtle.mode("logo")\n'
+                   f'turtle.begin_poly()\n'
+                   f'for i in Tuples:\n'
+                   f'    turtle.goto(i)\n'
+                   f'turtle.end_poly()\n'
+                   f'p = turtle.get_poly()\n'
+                   f'turtle.register_shape("myFavouriteShape", p)\n'
+                   f'turtle.shape("myFavouriteShape")\n'
+                   f'turtle.goto(0, 0)\n'
+                   f'turtle.clear()'
+                   f'turtle.mainloop()')
+        file.close()
 
 
 if __name__ == '__main__':

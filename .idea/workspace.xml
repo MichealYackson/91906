@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="home pc">
-      <change beforePath="$PROJECT_DIR$/.idea/91906.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/91906.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="added more controls, haven't added writing onto a file yet or documented the testing either.">
+      <change afterPath="$PROJECT_DIR$/MyLittleTurtle.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1742861013609</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="added more controls, haven't added writing onto a file yet or documented the testing either.">
+      <option name="closed" value="true" />
+      <created>1743401466963</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1743401466963</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -203,6 +208,7 @@
     <MESSAGE value="final version before trailing" />
     <MESSAGE value="I'm pretty happy with this for a first decomp" />
     <MESSAGE value="home pc" />
-    <option name="LAST_COMMIT_MESSAGE" value="home pc" />
+    <MESSAGE value="added more controls, haven't added writing onto a file yet or documented the testing either." />
+    <option name="LAST_COMMIT_MESSAGE" value="added more controls, haven't added writing onto a file yet or documented the testing either." />
   </component>
 </project>
