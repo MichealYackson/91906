@@ -7,11 +7,15 @@ class Controller:
         self.turtle = turtle_name
 
     def main_loop(self):
-        screen.onkey(quit, "q")
-        screen.onkey(self.turtle.move_up,"w")
-        screen.onkey(self.turtle.move_down,"s")
-        screen.onkey(self.turtle.move_right, "d")
-        screen.onkey(self.turtle.move_left, "a")
+        screen.onkeyrelease(self.turtle.save_tuple, "x")
+        screen.onkeyrelease(self.turtle.tuple_of_tuples, "f")
+        screen.onkeyrelease(quit, "q")
+        screen.onkeyrelease(self.turtle.home, "h")
+        screen.onkeyrelease(self.turtle.undo_last, "z")
+        screen.onkeypress(self.turtle.move_up,"w")
+        screen.onkeypress(self.turtle.move_down,"s")
+        screen.onkeypress(self.turtle.move_right, "d")
+        screen.onkeypress(self.turtle.move_left, "a")
         screen.listen()
 
 
@@ -21,6 +25,7 @@ class PointerTurtle:
     def __init__(self):
         # names the turtle we will be using and states where the turtle is
         self.pointer_turtle = Turtle()
+        self.pointer_turtle.setundobuffer(255*255*255)
         self.current_y = 0
         self.current_x = 0
         self.distance = 20
@@ -32,6 +37,14 @@ class PointerTurtle:
         # to show the user the points they have saved
         return str(self.tuple_list)
 
+    def undo_last(self):
+        self.pointer_turtle.undo()
+
+    def home(self):
+        self.current_y = 0
+        self.current_x = 0
+        self.pointer_turtle.goto(0,0)
+
     def get_distance(self, answer):
         # sets distance travel to the input
         self.distance = int(answer)
@@ -40,19 +53,19 @@ class PointerTurtle:
     # I have made it variables that it remembers and adds or subtracts to move
     def move_up(self):
         self.current_y = self.current_y + self.distance
-        self.pointer_turtle.goto(self.current_x, self.current_y)
+        self.pointer_turtle.sety(self.current_y)
 
     def move_down(self):
         self.current_y = self.current_y - self.distance
-        self.pointer_turtle.goto(self.current_x, self.current_y)
+        self.pointer_turtle.sety(self.current_y)
 
     def move_right(self):
         self.current_x = self.current_x + self.distance
-        self.pointer_turtle.goto(self.current_x, self.current_y)
+        self.pointer_turtle.setx(self.current_x)
 
     def move_left(self):
         self.current_x = self.current_x - self.distance
-        self.pointer_turtle.goto(self.current_x, self.current_y)
+        self.pointer_turtle.setx(self.current_x)
 
     def save_tuple(self):
         # when saving a tuple I make the turtle make a dot of where it is
