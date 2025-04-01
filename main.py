@@ -26,18 +26,19 @@ class Controller:
         screen.listen()
 
 class GUI:
-    def __init__(self):
-        pass
+    def __init__(self, turtle_name):
+        self.turtle_properties = turtle_name
+
 
 class PaintBrush:
-    def __init__(self):
-        pass
+    def __init__(self, turtle_name):
+        self.paint_brush_turtle = turtle_name
 
 # this class handles the turtle that will be used for making the shape
 class PointerTurtle:
-    def __init__(self):
+    def __init__(self, turtle_name):
         # names the turtle we will be using and states where the turtle is
-        self.pointer_turtle = Turtle()
+        self.pointer_turtle = turtle_name
         self.pointer_turtle.setundobuffer(255*255*255)
         self.current_y = 0
         self.current_x = 0
@@ -115,7 +116,10 @@ if __name__ == '__main__':
     # without running the program
     screen = t.Screen()
     t.mode("logo")
-    Turtle = PointerTurtle()
-    App = Controller(Turtle)
-    App.main_loop()
+    my_little_turtle = Turtle()
+    Turtle = PointerTurtle(my_little_turtle)
+    Controller = Controller(Turtle)
+    Controller.main_loop()
+    Paint_Brush = PaintBrush(my_little_turtle)
+    User_GUI = GUI(my_little_turtle)
     t.mainloop()
