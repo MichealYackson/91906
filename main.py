@@ -15,7 +15,7 @@ class Controller:
                       "And you can close your program by pressing 'C'\n")
         print(guidelines)
         screen.onkeyrelease(self.turtle.save_tuple, "q")
-        screen.onkeyrelease(self.turtle.tuple_of_tuples, "enter")
+        screen.onkeyrelease(self.turtle.tuple_of_tuples, "Return")
         screen.onkeyrelease(quit, "c")
         screen.onkeyrelease(self.turtle.home, "h")
         screen.onkeypress(self.turtle.undo_last, "r")
@@ -25,7 +25,13 @@ class Controller:
         screen.onkeypress(self.turtle.move_left, "a")
         screen.listen()
 
+class GUI:
+    def __init__(self):
+        pass
 
+class PaintBrush:
+    def __init__(self):
+        pass
 
 # this class handles the turtle that will be used for making the shape
 class PointerTurtle:
