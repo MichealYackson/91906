@@ -7,11 +7,18 @@ class Controller:
         self.turtle = turtle_name
 
     def main_loop(self):
-        screen.onkeyrelease(self.turtle.save_tuple, "x")
-        screen.onkeyrelease(self.turtle.tuple_of_tuples, "f")
-        screen.onkeyrelease(quit, "q")
+        guidelines = ("Here are the controls for the program:\n"
+                      "'WASD' is used for movement\n"
+                      "you can use 'Q' to make a tuple for your turtle shape.\n"
+                      "'R' is to undo the last action you have done\n"
+                      "Once you have a shape you can press 'ENTER' to get your file\n"
+                      "And you can close your program by pressing 'C'\n")
+        print(guidelines)
+        screen.onkeyrelease(self.turtle.save_tuple, "q")
+        screen.onkeyrelease(self.turtle.tuple_of_tuples, "enter")
+        screen.onkeyrelease(quit, "c")
         screen.onkeyrelease(self.turtle.home, "h")
-        screen.onkeyrelease(self.turtle.undo_last, "z")
+        screen.onkeypress(self.turtle.undo_last, "r")
         screen.onkeypress(self.turtle.move_up,"w")
         screen.onkeypress(self.turtle.move_down,"s")
         screen.onkeypress(self.turtle.move_right, "d")
@@ -43,7 +50,7 @@ class PointerTurtle:
     def home(self):
         self.current_y = 0
         self.current_x = 0
-        self.pointer_turtle.goto(0,0)
+        self.pointer_turtle.goto(self.current_x,self.current_y)
 
     def get_distance(self, answer):
         # sets distance travel to the input
@@ -91,7 +98,7 @@ class PointerTurtle:
                    f'turtle.register_shape("myFavouriteShape", p)\n'
                    f'turtle.shape("myFavouriteShape")\n'
                    f'turtle.goto(0, 0)\n'
-                   f'turtle.clear()'
+                   f'turtle.clear()\n'
                    f'turtle.mainloop()')
         file.close()
 

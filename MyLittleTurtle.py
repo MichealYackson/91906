@@ -1,5 +1,5 @@
 import turtle
-Tuples = ((0, 0), (40, 40), (40, 0), (100, 40), (60, 80), (-40, 40), (0, 140), (-120, 0))
+Tuples = ((0, 0), (0, 80), (-100, 60), (-160, 20), (-100, -80), (-20, -40), (-40, 0))
 turtle.mode("logo")
 turtle.begin_poly()
 for i in Tuples:
@@ -9,5 +9,4 @@ p = turtle.get_poly()
 turtle.register_shape("myFavouriteShape", p)
 turtle.shape("myFavouriteShape")
 turtle.goto(0, 0)
-turtle.clear()
-turtle.mainloop()
+turtle.clear()turtle.mainloop()
