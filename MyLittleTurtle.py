@@ -1,5 +1,5 @@
 import turtle
-Tuples = ((-100, 60), (-100, 120), (-40, 120))
+Tuples = ((100, 0), (100, 60), (40, 60), (-20, 60), (-20, 20), (20, -20), (-60, -20), (20, -60))
 turtle.mode("logo")
 turtle.begin_poly()
 for i in Tuples:
