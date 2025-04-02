@@ -36,6 +36,7 @@ class PointerTurtle:
         # names the turtle we will be using and states where the turtle is
         self.pointer_turtle = turtle_name
         self.pointer_turtle.setundobuffer(255*255*255)
+        self.pointer_turtle.speed(0)
         self.current_y = 0
         self.current_x = 0
         self.distance = 20
@@ -63,31 +64,24 @@ class PointerTurtle:
     # I have made it variables that it remembers and adds or subtracts to move
     def move_up(self):
         self.locate_thy_self()
-        self.pointer_turtle.speed('normal')
         self.current_y = self.current_y + self.distance
         self.pointer_turtle.sety(self.current_y)
         self.pointer_turtle.speed(0)
 
     def move_down(self):
         self.locate_thy_self()
-        self.pointer_turtle.speed('normal')
         self.current_y = self.current_y - self.distance
         self.pointer_turtle.sety(self.current_y)
-        self.pointer_turtle.speed(0)
 
     def move_right(self):
         self.locate_thy_self()
-        self.pointer_turtle.speed('normal')
         self.current_x = self.current_x + self.distance
         self.pointer_turtle.setx(self.current_x)
-        self.pointer_turtle.speed(0)
 
     def move_left(self):
         self.locate_thy_self()
-        self.pointer_turtle.speed('normal')
         self.current_x = self.current_x - self.distance
         self.pointer_turtle.setx(self.current_x)
-        self.pointer_turtle.speed(0)
 
     def save_tuple(self):
         # when saving a tuple I make the turtle make a dot of where it is
