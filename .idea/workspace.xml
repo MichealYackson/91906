@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="mr break time, mb gang">
+    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="final before paint brush after trailing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MyLittleTurtle.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyLittleTurtle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +33,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="paint_brush" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +65,7 @@
     "Python.main.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "GUI",
     "last_opened_file_path": "C:/Python Projects",
     "settings.editor.selected.configurable": "preferences.customizations"
   }
@@ -202,7 +204,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743493748296</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="final before paint brush after trailing">
+      <option name="closed" value="true" />
+      <created>1743634524913</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1743634524913</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -229,6 +239,7 @@
     <MESSAGE value="added comment" />
     <MESSAGE value="setted up everything for the new changes, ready to branch off now" />
     <MESSAGE value="mr break time, mb gang" />
-    <option name="LAST_COMMIT_MESSAGE" value="mr break time, mb gang" />
+    <MESSAGE value="final before paint brush after trailing" />
+    <option name="LAST_COMMIT_MESSAGE" value="final before paint brush after trailing" />
   </component>
 </project>

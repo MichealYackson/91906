@@ -1,6 +1,9 @@
 # this imports the libraries used by this code and what they need from it
 import turtle as t
+import tkinter as tk
 from turtle import Turtle
+from turtle import Screen
+from tkinter import ttk
 
 class Controller:
     def __init__(self, turtle_name):
@@ -26,8 +29,21 @@ class Controller:
         screen.listen()
 
 class GUI:
-    def __init__(self, turtle_name):
+    def __init__(self, turtle_name, tk_canvas):
         self.turtle_properties = turtle_name
+        self.user_canvas = tk_canvas
+
+    def build_box(self):
+        screen_location = 1000
+        screen_filler = screen_location*1.5
+        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        canvas.create_window(screen_location, 0, window=frame)
+        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        canvas.create_window(-screen_location, 0, window=frame)
+        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        canvas.create_window(0, screen_location, window=frame)
+        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        canvas.create_window(0, -screen_location, window=frame)
 
 
 # this class handles the turtle that will be used for making the shape
@@ -86,6 +102,7 @@ class PointerTurtle:
     def save_tuple(self):
         # when saving a tuple I make the turtle make a dot of where it is
         # to remind the user where visually his shape will be
+        self.locate_thy_self()
         width = int(round(self.distance/2, 0))
         self.pointer_turtle.dot(width, "blue")
         current_tuple = (self.current_x, self.current_y)
@@ -125,11 +142,13 @@ if __name__ == '__main__':
     # else the person looking at the code can snatch code from the classes
     # without running the program
     screen = t.Screen()
+    canvas = screen.getcanvas()
     t.mode("logo")
     my_little_turtle = Turtle()
     Turtle = PointerTurtle(my_little_turtle)
     Controller = Controller(Turtle)
     Controller.main_loop()
     Turtle.brush()
-    User_GUI = GUI(my_little_turtle)
+    User_GUI = GUI(my_little_turtle, canvas)
+    User_GUI.build_box()
     t.mainloop()
