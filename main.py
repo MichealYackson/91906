@@ -30,10 +30,6 @@ class GUI:
         self.turtle_properties = turtle_name
 
 
-class PaintBrush:
-    def __init__(self, turtle_name):
-        self.paint_brush_turtle = turtle_name
-
 # this class handles the turtle that will be used for making the shape
 class PointerTurtle:
     def __init__(self, turtle_name):
@@ -66,20 +62,32 @@ class PointerTurtle:
     # for all of this the move code since turtle does not have a change x or y code
     # I have made it variables that it remembers and adds or subtracts to move
     def move_up(self):
+        self.locate_thy_self()
+        self.pointer_turtle.speed('normal')
         self.current_y = self.current_y + self.distance
         self.pointer_turtle.sety(self.current_y)
+        self.pointer_turtle.speed(0)
 
     def move_down(self):
+        self.locate_thy_self()
+        self.pointer_turtle.speed('normal')
         self.current_y = self.current_y - self.distance
         self.pointer_turtle.sety(self.current_y)
+        self.pointer_turtle.speed(0)
 
     def move_right(self):
+        self.locate_thy_self()
+        self.pointer_turtle.speed('normal')
         self.current_x = self.current_x + self.distance
         self.pointer_turtle.setx(self.current_x)
+        self.pointer_turtle.speed(0)
 
     def move_left(self):
+        self.locate_thy_self()
+        self.pointer_turtle.speed('normal')
         self.current_x = self.current_x - self.distance
         self.pointer_turtle.setx(self.current_x)
+        self.pointer_turtle.speed(0)
 
     def save_tuple(self):
         # when saving a tuple I make the turtle make a dot of where it is
@@ -88,6 +96,14 @@ class PointerTurtle:
         self.pointer_turtle.dot(width, "blue")
         current_tuple = (self.current_x, self.current_y)
         self.tuple_list.append(current_tuple)
+
+    def brush(self):
+        self.pointer_turtle.speed(0)
+        screen.onscreenclick(self.pointer_turtle.goto)
+
+    def locate_thy_self(self):
+        self.current_y = self.pointer_turtle.ycor()
+        self.current_x = self.pointer_turtle.xcor()
 
     def tuple_of_tuples(self):
         # this just makes a tuple of the tuples so when it prints out the code
@@ -120,6 +136,6 @@ if __name__ == '__main__':
     Turtle = PointerTurtle(my_little_turtle)
     Controller = Controller(Turtle)
     Controller.main_loop()
-    Paint_Brush = PaintBrush(my_little_turtle)
+    Turtle.brush()
     User_GUI = GUI(my_little_turtle)
     t.mainloop()
