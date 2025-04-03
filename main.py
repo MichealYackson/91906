@@ -31,18 +31,20 @@ class Controller:
 
 class GUI:
     def __init__(self, turtle_name, tk_canvas):
-        self.screen_location = 1500
+        self.screen_location = 1000
         self.half_screen_location = self.screen_location / 2
         self.quarter_screen_location = self.screen_location / 4
         self.tenth_screen_location = self.screen_location / 10
         self.entry_width = int(round(self.tenth_screen_location/10, 0))
+
         self.turtle_properties = turtle_name
         self.user_canvas = tk_canvas
+
         self.intro_text_box = tk.StringVar()
         self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.rgb_submit = tk.Button(canvas.master, text="Submit", command=self.send_off_colours)
+        self.rgb_submit = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
         self.red_frame = tk.Frame(self.user_canvas.master, bg="red", width=self.tenth_screen_location,
                                   height=self.tenth_screen_location)
         self.blue_frame = tk.Frame(self.user_canvas.master, bg="blue", width=self.tenth_screen_location,
@@ -95,11 +97,30 @@ class GUI:
         self.user_canvas.create_window(0, other_special_height, window=self.green_frame)
         self.user_canvas.create_window(other_special_height, other_special_height, window=self.rgb_frame)
 
+    def other_buttons(self):
+        undo_button = tk.Button(canvas.master, text="Undo", command=self.turtle_properties.undo_last)
+        make_point_button = tk.Button(canvas.master, text="Make Point", command=self.turtle_properties.save_tuple())
+        home_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.home())
+        quit_button = tk.Button(canvas.master, text="Quit", command=quit)
+        distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance())
+        code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples())
+
+
     def send_off_colours(self):
         red = self.red_entry.get()
         blue = self.blue_entry.get()
         green = self.green_entry.get()
+        if red == "":
+            red = "0"
+        if blue == "":
+            blue = "0"
+        if green == "":
+            green = "0"
         print(f'R:{red} G:{green} B:{blue}')
+        self.turtle_properties.set_pen_colour(red,green,blue)
+
+    def send_off_distance(self):
+        pass
 
 
 
@@ -175,6 +196,25 @@ class PointerTurtle:
         self.current_y = self.pointer_turtle.ycor()
         self.current_x = self.pointer_turtle.xcor()
 
+    def set_pen_colour(self, red, green, blue):
+        try:
+            red = int(red)
+        except:
+            print("An exception occurred")
+            red = 0
+        try:
+            green = int(green)
+        except:
+            print("An exception occurred")
+            green = 0
+        try:
+            blue = int(blue)
+        except:
+            print("An exception occurred")
+            blue = 0
+        self.pointer_turtle.pencolor(red, green, blue)
+
+
     def tuple_of_tuples(self):
         # this just makes a tuple of the tuples so when it prints out the code
         # so the user knows not to touch it if they don't want to change the shape
@@ -203,12 +243,13 @@ if __name__ == '__main__':
     screen = t.Screen()
     canvas = screen.getcanvas()
     t.mode("logo")
+    t.colormode(255)
     my_little_turtle = Turtle()
     Turtle = PointerTurtle(my_little_turtle)
     Controller = Controller(Turtle)
     Controller.main_loop()
     Turtle.brush()
-    User_GUI = GUI(my_little_turtle, canvas)
+    User_GUI = GUI(Turtle, canvas)
     User_GUI.build_box()
     User_GUI.build_intro_text_box()
     User_GUI.build_gui_controller()
