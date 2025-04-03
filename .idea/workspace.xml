@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="almost finished with the buttons, just have to lpace them on the screen now" />
+    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="now I have all I need, time to place and style" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -232,7 +232,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743723074341</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="now I have all I need, time to place and style">
+      <option name="closed" value="true" />
+      <created>1743723917578</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1743723917578</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -263,6 +271,7 @@
     <MESSAGE value="got the text box working" />
     <MESSAGE value="colour picker almost there" />
     <MESSAGE value="almost finished with the buttons, just have to lpace them on the screen now" />
-    <option name="LAST_COMMIT_MESSAGE" value="almost finished with the buttons, just have to lpace them on the screen now" />
+    <MESSAGE value="now I have all I need, time to place and style" />
+    <option name="LAST_COMMIT_MESSAGE" value="now I have all I need, time to place and style" />
   </component>
 </project>
