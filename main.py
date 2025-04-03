@@ -43,6 +43,7 @@ class GUI:
         self.user_canvas = tk_canvas
 
         self.distance_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
+        self.file_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
@@ -93,10 +94,12 @@ class GUI:
         self.blue_entry.lift()
         self.green_entry.lift()
         self.distance_entry.lift()
+        self.file_name_entry.lift()
         self.user_canvas.create_window(-self.quarter_screen_location, self.special_height, window=self.red_entry)
         self.user_canvas.create_window(self.quarter_screen_location,self.special_height, window=self.blue_entry)
         self.user_canvas.create_window(0, self.special_height, window=self.green_entry)
         self.user_canvas.create_window(self.half_screen_location, 0, window=self.distance_entry)
+        self.user_canvas.create_window(self.half_screen_location, 0, window=self.file_name_entry)
 
     def build_gui_buttons(self):
         undo_button = tk.Button(canvas.master, text="Undo", command=self.turtle_properties.undo_last)
@@ -106,7 +109,8 @@ class GUI:
         pen_up_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.set_pen_up)
         pen_down_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.set_pen_down)
         distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance)
-        code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples)
+        make_code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples)
+        name_file_button = tk.Button(canvas.master, text="Make Program", command=self.name_file)
         rgb_button = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
         self.user_canvas.create_window(self.half_screen_location, self.special_height, window=undo_button)
         self.user_canvas.create_window(self.half_screen_location, self.special_height, window=make_point_button)
@@ -115,7 +119,8 @@ class GUI:
         self.user_canvas.create_window(self.half_screen_location, self.special_height, window=pen_up_button)
         self.user_canvas.create_window(self.half_screen_location, self.special_height, window=pen_down_button)
         self.user_canvas.create_window(self.half_screen_location, self.special_height, window=distance_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=code_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=make_code_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=name_file_button)
         self.user_canvas.create_window(-self.half_screen_location, self.special_height, window=rgb_button)
 
     def send_off_colours(self):
@@ -137,6 +142,11 @@ class GUI:
         print(f'{distance}')
         self.turtle_properties.get_distance(distance)
 
+    def name_file(self):
+        file_name = self.file_name_entry.get()
+        print(f'{file_name}')
+        self.turtle_properties.set_file_name(file_name)
+
 
 
 
@@ -153,6 +163,7 @@ class PointerTurtle:
         self.distance = 20
         # list for the tuples that will be saved later and used else where in the class
         self.tuple_list = []
+        self.file_name = "MyLittleTurtle"
 
     def __str__(self):
         # when called as a string I want to see the tuple list
@@ -235,12 +246,14 @@ class PointerTurtle:
     def set_pen_down(self):
         self.pointer_turtle.pd()
 
+    def set_file_name(self, name):
+        self.file_name = name
 
     def tuple_of_tuples(self):
         # this just makes a tuple of the tuples so when it prints out the code
         # so the user knows not to touch it if they don't want to change the shape
         tuple_of_tuples = tuple(self.tuple_list)
-        file = open("MyLittleTurtle.py", "w")
+        file = open(f'{self.file_name}.py', "w")
         file.write(f'import turtle\n'
                    f'Tuples = {tuple_of_tuples}\n'
                    f'turtle.mode("logo")\n'
