@@ -36,14 +36,34 @@ class GUI:
     def build_box(self):
         screen_location = 1000
         screen_filler = screen_location*1.5
-        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        box_colour= "black"
+        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
         canvas.create_window(screen_location, 0, window=frame)
-        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
         canvas.create_window(-screen_location, 0, window=frame)
-        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
         canvas.create_window(0, screen_location, window=frame)
-        frame = tk.Frame(canvas.master, bg="black", width=screen_filler, height=screen_filler)
+        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
         canvas.create_window(0, -screen_location, window=frame)
+
+    def text_box(self):
+        text_box_text = tk.StringVar()
+        text_box_text.set("Here are the controls for the program:\n"
+                      "*'WASD' is used for movement\n"
+                      "*you can use 'Q' to make a tuple for your turtle shape.\n"
+                      "*'R' is to undo the last action you have done\n"
+                      "*Once you have a shape you can press 'ENTER' to get your file\n"
+                      "*And you can close your program by pressing 'C'\n")
+        label = tk.Label(canvas.master, textvariable=text_box_text, wraplength=250)
+        canvas.create_window(-500, 0, window=label)
+
+    def colour_controller(self):
+        pass
+
+    def build_buttons(self):
+        pass
+
+
 
 
 # this class handles the turtle that will be used for making the shape
@@ -151,4 +171,5 @@ if __name__ == '__main__':
     Turtle.brush()
     User_GUI = GUI(my_little_turtle, canvas)
     User_GUI.build_box()
+    User_GUI.text_box()
     t.mainloop()
