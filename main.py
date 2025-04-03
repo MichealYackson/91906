@@ -1,6 +1,7 @@
 # this imports the libraries used by this code and what they need from it
 import turtle as t
 import tkinter as tk
+from contextlib import nullcontext
 from turtle import Turtle
 from turtle import Screen
 from tkinter import ttk
@@ -30,38 +31,76 @@ class Controller:
 
 class GUI:
     def __init__(self, turtle_name, tk_canvas):
+        self.screen_location = 1500
+        self.half_screen_location = self.screen_location / 2
+        self.quarter_screen_location = self.screen_location / 4
+        self.tenth_screen_location = self.screen_location / 10
+        self.entry_width = int(round(self.tenth_screen_location/10, 0))
         self.turtle_properties = turtle_name
         self.user_canvas = tk_canvas
+        self.intro_text_box = tk.StringVar()
+        self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
+        self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
+        self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
+        self.rgb_submit = tk.Button(canvas.master, text="Submit", command=self.send_off_colours)
+        self.red_frame = tk.Frame(self.user_canvas.master, bg="red", width=self.tenth_screen_location,
+                                  height=self.tenth_screen_location)
+        self.blue_frame = tk.Frame(self.user_canvas.master, bg="blue", width=self.tenth_screen_location,
+                                  height=self.tenth_screen_location)
+        self.green_frame = tk.Frame(self.user_canvas.master, bg="green", width=self.tenth_screen_location,
+                                  height=self.tenth_screen_location)
+        self.rgb_frame = tk.Frame(self.user_canvas.master, bg="black", width=self.tenth_screen_location,
+                                  height=self.tenth_screen_location)
+
 
     def build_box(self):
-        screen_location = 1000
-        screen_filler = screen_location*1.5
-        box_colour= "black"
-        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
-        canvas.create_window(screen_location, 0, window=frame)
-        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
-        canvas.create_window(-screen_location, 0, window=frame)
-        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
-        canvas.create_window(0, screen_location, window=frame)
-        frame = tk.Frame(canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
-        canvas.create_window(0, -screen_location, window=frame)
+        screen_filler = self.screen_location*1.5
+        box_colour= "dark grey"
+        frame = tk.Frame(self.user_canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
+        self.user_canvas.create_window(self.screen_location, 0, window=frame)
+        frame = tk.Frame(self.user_canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
+        self.user_canvas.create_window(-self.screen_location, 0, window=frame)
+        frame = tk.Frame(self.user_canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
+        self.user_canvas.create_window(0, self.screen_location, window=frame)
+        frame = tk.Frame(self.user_canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
+        self.user_canvas.create_window(0, -self.screen_location, window=frame)
 
-    def text_box(self):
-        text_box_text = tk.StringVar()
-        text_box_text.set("Here are the controls for the program:\n"
+    def build_intro_text_box(self):
+        self.intro_text_box.set("Here are the controls for the program:\n"
                       "*'WASD' is used for movement\n"
                       "*you can use 'Q' to make a tuple for your turtle shape.\n"
                       "*'R' is to undo the last action you have done\n"
                       "*Once you have a shape you can press 'ENTER' to get your file\n"
                       "*And you can close your program by pressing 'C'\n")
-        label = tk.Label(canvas.master, textvariable=text_box_text, wraplength=250)
-        canvas.create_window(-500, 0, window=label)
+        label = tk.Label(self.user_canvas.master, textvariable=self.intro_text_box, wraplength=self.quarter_screen_location)
+        self.user_canvas.create_window(-self.half_screen_location, 0, window=label)
 
-    def colour_controller(self):
-        pass
+    def build_gui_controller(self):
+        self.red_entry.lift()
+        self.blue_entry.lift()
+        self.green_entry.lift()
+        self.rgb_submit.lift()
+        self.red_frame.lift()
+        self.blue_frame.lift()
+        self.green_frame.lift()
+        self.rgb_frame.lift()
+        special_height = -(self.quarter_screen_location + self.quarter_screen_location/4)
+        other_special_height = -(self.quarter_screen_location + self.quarter_screen_location/2)
+        self.user_canvas.create_window(-self.quarter_screen_location, special_height, window=self.red_entry)
+        self.user_canvas.create_window(self.quarter_screen_location,special_height, window=self.blue_entry)
+        self.user_canvas.create_window(0, special_height, window=self.green_entry)
+        self.user_canvas.create_window(other_special_height, special_height, window=self.rgb_submit)
+        self.user_canvas.create_window(-self.quarter_screen_location, other_special_height, window=self.red_frame)
+        self.user_canvas.create_window(self.quarter_screen_location, other_special_height, window=self.blue_frame)
+        self.user_canvas.create_window(0, other_special_height, window=self.green_frame)
+        self.user_canvas.create_window(other_special_height, other_special_height, window=self.rgb_frame)
 
-    def build_buttons(self):
-        pass
+    def send_off_colours(self):
+        red = self.red_entry.get()
+        blue = self.blue_entry.get()
+        green = self.green_entry.get()
+        print(f'R:{red} G:{green} B:{blue}')
+
 
 
 
@@ -171,5 +210,6 @@ if __name__ == '__main__':
     Turtle.brush()
     User_GUI = GUI(my_little_turtle, canvas)
     User_GUI.build_box()
-    User_GUI.text_box()
+    User_GUI.build_intro_text_box()
+    User_GUI.build_gui_controller()
     t.mainloop()
