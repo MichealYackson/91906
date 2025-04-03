@@ -30,21 +30,22 @@ class Controller:
         screen.listen()
 
 class GUI:
-    def __init__(self, turtle_name, tk_canvas):
-        self.screen_location = 1000
+    def __init__(self, turtle_name, tk_canvas, user_resolution):
+        self.screen_location = user_resolution
         self.half_screen_location = self.screen_location / 2
         self.quarter_screen_location = self.screen_location / 4
         self.tenth_screen_location = self.screen_location / 10
         self.entry_width = int(round(self.tenth_screen_location/10, 0))
+        self.special_height = -(self.quarter_screen_location + self.quarter_screen_location / 4)
+        self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
 
         self.turtle_properties = turtle_name
         self.user_canvas = tk_canvas
 
-        self.intro_text_box = tk.StringVar()
+        self.distance_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.rgb_submit = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
         self.red_frame = tk.Frame(self.user_canvas.master, bg="red", width=self.tenth_screen_location,
                                   height=self.tenth_screen_location)
         self.blue_frame = tk.Frame(self.user_canvas.master, bg="blue", width=self.tenth_screen_location,
@@ -55,7 +56,7 @@ class GUI:
                                   height=self.tenth_screen_location)
 
 
-    def build_box(self):
+    def build_frames(self):
         screen_filler = self.screen_location*1.5
         box_colour= "dark grey"
         frame = tk.Frame(self.user_canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
@@ -67,46 +68,58 @@ class GUI:
         frame = tk.Frame(self.user_canvas.master, bg=box_colour, width=screen_filler, height=screen_filler)
         self.user_canvas.create_window(0, -self.screen_location, window=frame)
 
-    def build_intro_text_box(self):
-        self.intro_text_box.set("Here are the controls for the program:\n"
+        self.red_frame.lift()
+        self.blue_frame.lift()
+        self.green_frame.lift()
+        self.rgb_frame.lift()
+        self.user_canvas.create_window(-self.quarter_screen_location, self.other_special_height, window=self.red_frame)
+        self.user_canvas.create_window(self.quarter_screen_location, self.other_special_height, window=self.blue_frame)
+        self.user_canvas.create_window(0, self.other_special_height, window=self.green_frame)
+        self.user_canvas.create_window(-self.half_screen_location, self.other_special_height, window=self.rgb_frame)
+
+    def build_text_boxes(self):
+        intro_text_box = tk.StringVar()
+        intro_text_box.set("Here are the controls for the program:\n"
                       "*'WASD' is used for movement\n"
                       "*you can use 'Q' to make a tuple for your turtle shape.\n"
                       "*'R' is to undo the last action you have done\n"
                       "*Once you have a shape you can press 'ENTER' to get your file\n"
                       "*And you can close your program by pressing 'C'\n")
-        label = tk.Label(self.user_canvas.master, textvariable=self.intro_text_box, wraplength=self.quarter_screen_location)
+        label = tk.Label(self.user_canvas.master, textvariable=intro_text_box, wraplength=self.quarter_screen_location)
         self.user_canvas.create_window(-self.half_screen_location, 0, window=label)
 
-    def build_gui_controller(self):
+    def build_gui_entries(self):
         self.red_entry.lift()
         self.blue_entry.lift()
         self.green_entry.lift()
-        self.rgb_submit.lift()
-        self.red_frame.lift()
-        self.blue_frame.lift()
-        self.green_frame.lift()
-        self.rgb_frame.lift()
-        special_height = -(self.quarter_screen_location + self.quarter_screen_location/4)
-        other_special_height = -(self.quarter_screen_location + self.quarter_screen_location/2)
-        self.user_canvas.create_window(-self.quarter_screen_location, special_height, window=self.red_entry)
-        self.user_canvas.create_window(self.quarter_screen_location,special_height, window=self.blue_entry)
-        self.user_canvas.create_window(0, special_height, window=self.green_entry)
-        self.user_canvas.create_window(other_special_height, special_height, window=self.rgb_submit)
-        self.user_canvas.create_window(-self.quarter_screen_location, other_special_height, window=self.red_frame)
-        self.user_canvas.create_window(self.quarter_screen_location, other_special_height, window=self.blue_frame)
-        self.user_canvas.create_window(0, other_special_height, window=self.green_frame)
-        self.user_canvas.create_window(other_special_height, other_special_height, window=self.rgb_frame)
+        self.distance_entry.lift()
+        self.user_canvas.create_window(-self.quarter_screen_location, self.special_height, window=self.red_entry)
+        self.user_canvas.create_window(self.quarter_screen_location,self.special_height, window=self.blue_entry)
+        self.user_canvas.create_window(0, self.special_height, window=self.green_entry)
+        self.user_canvas.create_window(self.half_screen_location, 0, window=self.distance_entry)
 
-    def other_buttons(self):
+    def build_gui_buttons(self):
         undo_button = tk.Button(canvas.master, text="Undo", command=self.turtle_properties.undo_last)
-        make_point_button = tk.Button(canvas.master, text="Make Point", command=self.turtle_properties.save_tuple())
-        home_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.home())
+        make_point_button = tk.Button(canvas.master, text="Make Point", command=self.turtle_properties.save_tuple)
+        home_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.home)
         quit_button = tk.Button(canvas.master, text="Quit", command=quit)
-        distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance())
-        code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples())
-
+        pen_up_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.set_pen_up)
+        pen_down_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.set_pen_down)
+        distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance)
+        code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples)
+        rgb_button = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=undo_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=make_point_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=home_button)
+        self.user_canvas.create_window(self.half_screen_location, self.other_special_height, window=quit_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=pen_up_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=pen_down_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=distance_button)
+        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=code_button)
+        self.user_canvas.create_window(-self.half_screen_location, self.special_height, window=rgb_button)
 
     def send_off_colours(self):
+        screen.listen()
         red = self.red_entry.get()
         blue = self.blue_entry.get()
         green = self.green_entry.get()
@@ -120,7 +133,9 @@ class GUI:
         self.turtle_properties.set_pen_colour(red,green,blue)
 
     def send_off_distance(self):
-        pass
+        distance = self.distance_entry.get()
+        print(f'{distance}')
+        self.turtle_properties.get_distance(distance)
 
 
 
@@ -214,6 +229,12 @@ class PointerTurtle:
             blue = 0
         self.pointer_turtle.pencolor(red, green, blue)
 
+    def set_pen_up(self):
+        self.pointer_turtle.pu()
+
+    def set_pen_down(self):
+        self.pointer_turtle.pd()
+
 
     def tuple_of_tuples(self):
         # this just makes a tuple of the tuples so when it prints out the code
@@ -235,11 +256,24 @@ class PointerTurtle:
                    f'turtle.mainloop()')
         file.close()
 
+def set_resolution():
+    looping = True
+    while looping:
+        question = (f'How wide do you want to make your canvas for your turtle?\n'
+                    '(values between 500 to 1500 work nicely)\n')
+        answer = input(question)
+        try:
+            answer = int(answer)
+            looping = False
+        except:
+            print("sorry that input wasn't valid, please try again.\n")
+    return answer
 
 if __name__ == '__main__':
     # if the name of the project is main it will run and use the classes
     # else the person looking at the code can snatch code from the classes
     # without running the program
+    resolution = set_resolution()
     screen = t.Screen()
     canvas = screen.getcanvas()
     t.mode("logo")
@@ -249,8 +283,9 @@ if __name__ == '__main__':
     Controller = Controller(Turtle)
     Controller.main_loop()
     Turtle.brush()
-    User_GUI = GUI(Turtle, canvas)
-    User_GUI.build_box()
-    User_GUI.build_intro_text_box()
-    User_GUI.build_gui_controller()
+    User_GUI = GUI(Turtle, canvas, resolution)
+    User_GUI.build_frames()
+    User_GUI.build_text_boxes()
+    User_GUI.build_gui_entries()
+    User_GUI.build_gui_buttons()
     t.mainloop()
