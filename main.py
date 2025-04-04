@@ -44,6 +44,7 @@ class GUI:
 
         self.distance_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.file_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
+        self.shape_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
         self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
@@ -79,14 +80,14 @@ class GUI:
         self.user_canvas.create_window(-self.half_screen_location, self.other_special_height, window=self.rgb_frame)
 
     def build_text_boxes(self):
-        intro_text_box = tk.StringVar()
-        intro_text_box.set("Here are the controls for the program:\n"
+        text_box = tk.StringVar()
+        text_box.set("Here are the controls for the program:\n"
                       "*'WASD' is used for movement\n"
                       "*you can use 'Q' to make a tuple for your turtle shape.\n"
                       "*'R' is to undo the last action you have done\n"
                       "*Once you have a shape you can press 'ENTER' to get your file\n"
                       "*And you can close your program by pressing 'C'\n")
-        label = tk.Label(self.user_canvas.master, textvariable=intro_text_box, wraplength=self.quarter_screen_location)
+        label = tk.Label(self.user_canvas.master, textvariable=text_box, wraplength=self.quarter_screen_location)
         self.user_canvas.create_window(-self.half_screen_location, 0, window=label)
 
     def build_gui_entries(self):
@@ -95,33 +96,59 @@ class GUI:
         self.green_entry.lift()
         self.distance_entry.lift()
         self.file_name_entry.lift()
+        self.shape_name_entry.lift()
         self.user_canvas.create_window(-self.quarter_screen_location, self.special_height, window=self.red_entry)
         self.user_canvas.create_window(self.quarter_screen_location,self.special_height, window=self.blue_entry)
         self.user_canvas.create_window(0, self.special_height, window=self.green_entry)
-        self.user_canvas.create_window(self.half_screen_location, 0, window=self.distance_entry)
-        self.user_canvas.create_window(self.half_screen_location, 0, window=self.file_name_entry)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, 0, window=self.distance_entry)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location,
+                                       -self.special_height-2*self.tenth_screen_location, window=self.file_name_entry)
+        self.user_canvas.create_window(self.half_screen_location + self.tenth_screen_location,
+                                   -self.special_height - self.tenth_screen_location, window=self.shape_name_entry)
 
     def build_gui_buttons(self):
         undo_button = tk.Button(canvas.master, text="Undo", command=self.turtle_properties.undo_last)
         make_point_button = tk.Button(canvas.master, text="Make Point", command=self.turtle_properties.save_tuple)
         home_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.home)
         quit_button = tk.Button(canvas.master, text="Quit", command=quit)
-        pen_up_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.set_pen_up)
-        pen_down_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.set_pen_down)
+        pen_up_button = tk.Button(canvas.master, text="Pen Up", command=self.turtle_properties.set_pen_up)
+        pen_down_button = tk.Button(canvas.master, text="Pen Down", command=self.turtle_properties.set_pen_down)
         distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance)
         make_code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples)
-        name_file_button = tk.Button(canvas.master, text="Make Program", command=self.name_file)
+        name_file_button = tk.Button(canvas.master, text="Name Program", command=self.name_file)
+        shape_file_button = tk.Button(canvas.master, text="Name Program", command=self.turtle_properties.set_shape_name)
         rgb_button = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=undo_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=make_point_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=home_button)
-        self.user_canvas.create_window(self.half_screen_location, self.other_special_height, window=quit_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=pen_up_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=pen_down_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=distance_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=make_code_button)
-        self.user_canvas.create_window(self.half_screen_location, self.special_height, window=name_file_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, self.special_height, window=undo_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, self.special_height+2*self.tenth_screen_location, window=make_point_button)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, self.special_height+2*self.tenth_screen_location, window=home_button)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, self.special_height, window=quit_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, self.special_height+self.tenth_screen_location, window=pen_up_button)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, self.special_height+self.tenth_screen_location, window=pen_down_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, 0, window=distance_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, -self.special_height, window=make_code_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, -self.special_height-2*self.tenth_screen_location, window=name_file_button)
         self.user_canvas.create_window(-self.half_screen_location, self.special_height, window=rgb_button)
+
+    def change_rgb_frame(self, red, green, blue):
+        try:
+            red = int(red)
+        except:
+            print("An exception occurred")
+            red = 0
+        try:
+            green = int(green)
+        except:
+            print("An exception occurred")
+            green = 0
+        try:
+            blue = int(blue)
+        except:
+            print("An exception occurred")
+            blue = 0
+        rgb_value = f'#{red:02x}{green:02x}{blue:02x}'
+        self.rgb_frame = tk.Frame(self.user_canvas.master, bg=rgb_value, width=self.tenth_screen_location,
+                                  height=self.tenth_screen_location)
+        self.user_canvas.create_window(-self.half_screen_location, self.other_special_height, window=self.rgb_frame)
 
     def send_off_colours(self):
         screen.listen()
@@ -129,13 +156,14 @@ class GUI:
         blue = self.blue_entry.get()
         green = self.green_entry.get()
         if red == "":
-            red = "0"
+            red = "00"
         if blue == "":
-            blue = "0"
+            blue = "00"
         if green == "":
-            green = "0"
+            green = "00"
         print(f'R:{red} G:{green} B:{blue}')
         self.turtle_properties.set_pen_colour(red,green,blue)
+        self.change_rgb_frame(red,green,blue)
 
     def send_off_distance(self):
         distance = self.distance_entry.get()
@@ -164,6 +192,7 @@ class PointerTurtle:
         # list for the tuples that will be saved later and used else where in the class
         self.tuple_list = []
         self.file_name = "MyLittleTurtle"
+        self.shape_name = "MyVeryOwnShape"
 
     def __str__(self):
         # when called as a string I want to see the tuple list
@@ -249,6 +278,9 @@ class PointerTurtle:
     def set_file_name(self, name):
         self.file_name = name
 
+    def set_shape_name(self, name):
+        self.shape_name = name
+
     def tuple_of_tuples(self):
         # this just makes a tuple of the tuples so when it prints out the code
         # so the user knows not to touch it if they don't want to change the shape
@@ -262,8 +294,8 @@ class PointerTurtle:
                    f'    turtle.goto(i)\n'
                    f'turtle.end_poly()\n'
                    f'p = turtle.get_poly()\n'
-                   f'turtle.register_shape("myFavouriteShape", p)\n'
-                   f'turtle.shape("myFavouriteShape")\n'
+                   f'turtle.register_shape("{self.shape_name}", p)\n'
+                   f'turtle.shape("{self.shape_name}")\n'
                    f'turtle.goto(0, 0)\n'
                    f'turtle.clear()\n'
                    f'turtle.mainloop()')

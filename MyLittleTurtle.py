@@ -1,5 +1,5 @@
 import turtle
-Tuples = ()
+Tuples = ((0, 0),)
 turtle.mode("logo")
 turtle.begin_poly()
 for i in Tuples:
