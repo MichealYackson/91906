@@ -11,24 +11,64 @@ class Controller:
         self.turtle = turtle_name
 
     def main_loop(self):
-        guidelines = ("Here are the controls for the program:\n"
-                      "'WASD' is used for movement\n"
+        guidelines = (f'Here are the controls for the program:\n'
+                      "'WASD' or arrow keys is used for movement\n"
                       "you can use 'Q' to make a tuple for your turtle shape.\n"
-                      "'R' is to undo the last action you have done\n"
-                      "Once you have a shape you can press 'ENTER' to get your file\n"
-                      "And you can close your program by pressing 'C'\n")
+                      "'Z' is to undo the last action you have done.\n"
+                      "Once you have a shape you can press 'ENTER' or 'L' to get your file.\n"
+                      "And you can close your program by pressing 'C'.\n"
+                      "pressing 'H' will return your turtle home (0,0).\n"
+                      "'E' will pause drawing the shape and 'R' will resume drawing it.\n"
+                      "Pressing 'I' will ask for the distance you want to travel.\n"
+                      "While pressing 'O' will ask to rename the turtles shape\n"
+                      "and pressing 'p' will ask you to rename the file you makes name.\n")
         print(guidelines)
-        screen.onkeyrelease(self.turtle.save_tuple, "q")
-        screen.onkeyrelease(self.turtle.make_file, "Return")
-        screen.onkeyrelease(self.turtle.make_file, "l")
-        screen.onkeyrelease(quit, "c")
-        screen.onkeyrelease(self.turtle.home, "h")
-        screen.onkeypress(self.turtle.undo_last, "r")
         screen.onkeypress(self.turtle.move_up,"w")
         screen.onkeypress(self.turtle.move_down,"s")
         screen.onkeypress(self.turtle.move_right, "d")
         screen.onkeypress(self.turtle.move_left, "a")
+        screen.onkeypress(self.turtle.move_up,"Up")
+        screen.onkeypress(self.turtle.move_down,"Down")
+        screen.onkeypress(self.turtle.move_right, "Right")
+        screen.onkeypress(self.turtle.move_left, "Left")
+        screen.onkeyrelease(self.turtle.save_tuple, "q")
+        screen.onkeypress(self.turtle.undo_last, "z")
+        screen.onkeyrelease(self.turtle.make_file, "Return")
+        screen.onkeyrelease(self.turtle.make_file, "l")
+        screen.onkeyrelease(quit, "c")
+        screen.onkeyrelease(self.turtle.home, "h")
+        screen.onkeypress(self.turtle.pause_shape, "e")
+        screen.onkeypress(self.turtle.resume_shape, "r")
+        screen.onkeypress(self.ask_for_distance, "i")
+        screen.onkeypress(self.ask_for_shape_name, "o")
+        screen.onkeypress(self.ask_for_program_name, "p")
         screen.listen()
+
+    def ask_for_distance(self):
+        # tells the turtle class how far it is allowed to move
+        question = "What distance do you want to travel?\n"
+        # uses try except to avoid errors
+        answer = input(question)
+        try:
+            answer = int(answer)
+            self.turtle.get_distance(answer)
+        except ValueError:
+            print("Sorry that input wasn't valid, press 'i' to try again\n")
+
+    def ask_for_program_name(self):
+        # tells the turtle class how far it is allowed to move
+        question = "What do you want to name your file?\n"
+        # uses try except to avoid errors
+        answer = input(question)
+        self.turtle.set_file_name(answer)
+
+    def ask_for_shape_name(self):
+        # tells the turtle class how far it is allowed to move
+        question = "What do you want to name your shape?\n"
+        # uses try except to avoid errors
+        answer = input(question)
+        self.turtle.set_shape_name(answer)
+
 
 class GUI:
     def __init__(self, turtle_name, tk_canvas, user_resolution):
@@ -36,7 +76,8 @@ class GUI:
         self.half_screen_location = self.screen_location / 2
         self.quarter_screen_location = self.screen_location / 4
         self.tenth_screen_location = self.screen_location / 10
-        self.entry_width = int(round(self.tenth_screen_location/10, 0))
+        self.entry_width = int(round(self.tenth_screen_location / 10, 0))
+        self.text_size = int(round(self.entry_width*1.5, 0))
         self.special_height = -(self.quarter_screen_location + self.quarter_screen_location / 4)
         self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
 
@@ -82,14 +123,20 @@ class GUI:
 
     def build_text_boxes(self):
         text_box = tk.StringVar()
-        text_box.set("Here are the controls for the program:\n"
-                      "*'WASD' is used for movement\n"
-                      "*you can use 'Q' to make a tuple for your turtle shape.\n"
-                      "*'R' is to undo the last action you have done\n"
-                      "*Once you have a shape you can press 'ENTER' to get your file\n"
-                      "*And you can close your program by pressing 'C'\n")
-        label = tk.Label(self.user_canvas.master, textvariable=text_box, wraplength=self.quarter_screen_location)
-        self.user_canvas.create_window(-self.half_screen_location, 0, window=label)
+        text_box.set(f'Here are the controls for the program:\n'
+                      "'WASD' or arrow keys is used for movement\n"
+                      "you can use 'Q' to make a tuple for your turtle shape.\n"
+                      "'Z' is to undo the last action you have done.\n"
+                      "Once you have a shape you can press 'ENTER' or 'L' to get your file.\n"
+                      "And you can close your program by pressing 'C'.\n"
+                      "pressing 'H' will return your turtle home (0,0).\n"
+                      "'E' will pause drawing the shape and 'R' will resume drawing it.\n"
+                      "Pressing 'I' will ask for the distance you want to travel.\n"
+                      "While pressing 'O' will ask to rename the turtles shape\n"
+                      "and pressing 'p' will ask you to rename the file you makes name.\n")
+        label = tk.Label(self.user_canvas.master, textvariable=text_box, font=("arial", self.text_size),
+                         wraplength=self.half_screen_location)
+        self.user_canvas.create_window(-self.half_screen_location-self.tenth_screen_location, 0, window=label)
 
     def build_gui_entries(self):
         self.red_entry.lift()
@@ -108,18 +155,18 @@ class GUI:
                                    -self.special_height - self.tenth_screen_location, window=self.shape_name_entry)
 
     def build_gui_buttons(self):
-        undo_button = tk.Button(canvas.master, text="Undo", command=self.turtle_properties.undo_last)
-        make_point_button = tk.Button(canvas.master, text="Make Point", command=self.turtle_properties.save_tuple)
-        home_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.home)
-        quit_button = tk.Button(canvas.master, text="Quit", command=quit)
-        pause_shape_button = tk.Button(canvas.master, text="Pause Shape", command=self.turtle_properties.pause_shape)
-        resume_shape_button = tk.Button(canvas.master, text="Resume Shape", command=self.turtle_properties.resume_shape)
-        distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance)
-        make_program_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.make_file)
-        clear_button = tk.Button(canvas.master, text="Clear", command=self.turtle_properties.clear)
-        name_file_button = tk.Button(canvas.master, text="Name Program", command=self.name_file)
-        shape_file_button = tk.Button(canvas.master, text="Name Shape", command=self.turtle_properties.set_shape_name)
-        rgb_button = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
+        undo_button = tk.Button(canvas.master, text="Undo", font=("arial", self.text_size), command=self.turtle_properties.undo_last)
+        make_point_button = tk.Button(canvas.master, text="Make Point", font=("arial", self.text_size), command=self.turtle_properties.save_tuple)
+        home_button = tk.Button(canvas.master, text="Home", font=("arial", self.text_size), command=self.turtle_properties.home)
+        quit_button = tk.Button(canvas.master, text="Quit", font=("arial", self.text_size), command=quit)
+        pause_shape_button = tk.Button(canvas.master, text="Pause Shape", font=("arial", self.text_size), command=self.turtle_properties.pause_shape)
+        resume_shape_button = tk.Button(canvas.master, text="Resume Shape", font=("arial", self.text_size), command=self.turtle_properties.resume_shape)
+        distance_button = tk.Button(canvas.master, text="Set Distance", font=("arial", self.text_size), command=self.send_off_distance)
+        make_program_button = tk.Button(canvas.master, text="Make Program", font=("arial", self.text_size), command=self.turtle_properties.make_file)
+        clear_button = tk.Button(canvas.master, text="Clear", font=("arial", self.text_size), command=self.turtle_properties.clear)
+        name_file_button = tk.Button(canvas.master, text="Name Program", font=("arial", self.text_size), command=self.name_file)
+        shape_file_button = tk.Button(canvas.master, text="Name Shape", font=("arial", self.text_size), command=self.turtle_properties.set_shape_name)
+        rgb_button = tk.Button(canvas.master, text="Submit Colours", font=("arial", self.text_size), command=self.send_off_colours)
         self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
                                        self.special_height, window=undo_button)
         self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
@@ -180,11 +227,13 @@ class GUI:
         self.change_rgb_frame(red,green,blue)
 
     def send_off_distance(self):
+        screen.listen()
         distance = self.distance_entry.get()
         print(f'{distance}')
         self.turtle_properties.get_distance(distance)
 
     def name_file(self):
+        screen.listen()
         file_name = self.file_name_entry.get()
         print(f'{file_name}')
         self.turtle_properties.set_file_name(file_name)
@@ -205,6 +254,9 @@ class PointerTurtle:
         self.pause_shape_x = 0
         self.pause_shape_y = 0
         self.distance = 20
+        self.pointer_turtle_red = 0
+        self.pointer_turtle_green = 0
+        self.pointer_turtle_blue = 0
         # list for the tuples that will be saved later and used else where in the class
         self.tuple_list = []
         self.file_name = "MyLittleTurtle"
@@ -246,7 +298,6 @@ class PointerTurtle:
         self.locate_thy_self()
         self.current_y = self.current_y + self.distance
         self.pointer_turtle.sety(self.current_y)
-        self.pointer_turtle.speed(0)
 
     def move_down(self):
         self.locate_thy_self()
@@ -296,7 +347,13 @@ class PointerTurtle:
         except:
             print("An exception occurred")
             blue = 0
-        self.pointer_turtle.pencolor(red, green, blue)
+        self.pointer_turtle_red = red
+        self.pointer_turtle_green = green
+        self.pointer_turtle_blue = blue
+        self.pointer_turtle.pencolor(self.pointer_turtle_red,
+                                     self.pointer_turtle_green, self.pointer_turtle_blue)
+        self.pointer_turtle.color(self.pointer_turtle_red,
+                                  self.pointer_turtle_green, self.pointer_turtle_blue)
 
     def pause_shape(self):
         self.pause_shape_y = self.pointer_turtle.ycor()
@@ -323,10 +380,12 @@ class PointerTurtle:
         file = open(f'{self.file_name}.py', "w")
         file.write(f'import turtle\n'
                    f'screen = turtle.Screen()\n'
-                   f'Tuples = {tuple_of_tuples}\n'
-                   f'{self.shape_name}_turtle = turtle.Turtle()\n'
                    f'turtle.colormode(255)\n'
                    f'turtle.mode("logo")\n'
+                   f'Tuples = {tuple_of_tuples}\n'
+                   f'{self.shape_name}_turtle = turtle.Turtle()\n'
+                   f'{self.shape_name}_turtle.color'
+                   f'({self.pointer_turtle_red}, {self.pointer_turtle_green}, {self.pointer_turtle_blue})\n'
                    f'screen.register_shape("{self.shape_name}", Tuples)\n'
                    f'{self.shape_name}_turtle.shape("{self.shape_name}")\n'
                    f'turtle.mainloop()')

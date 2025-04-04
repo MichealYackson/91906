@@ -1,9 +1,10 @@
 import turtle
 screen = turtle.Screen()
-Tuples = ((-118.0, 5.0), (-88.0, 73.0), (-76.0, 32.0), (-93.0, 28.0), (-85.0, 17.0))
-MyVeryOwnShape_turtle = turtle.Turtle()
 turtle.colormode(255)
 turtle.mode("logo")
+Tuples = ((-157.0, 1.0), (-96.0, -45.0), (-50.0, 3.0))
+MyVeryOwnShape_turtle = turtle.Turtle()
+MyVeryOwnShape_turtle.color(120, 180, 90)
 screen.register_shape("MyVeryOwnShape", Tuples)
 MyVeryOwnShape_turtle.shape("MyVeryOwnShape")
 turtle.mainloop()
