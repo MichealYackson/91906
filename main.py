@@ -19,7 +19,8 @@ class Controller:
                       "And you can close your program by pressing 'C'\n")
         print(guidelines)
         screen.onkeyrelease(self.turtle.save_tuple, "q")
-        screen.onkeyrelease(self.turtle.tuple_of_tuples, "Return")
+        screen.onkeyrelease(self.turtle.make_file, "Return")
+        screen.onkeyrelease(self.turtle.make_file, "l")
         screen.onkeyrelease(quit, "c")
         screen.onkeyrelease(self.turtle.home, "h")
         screen.onkeypress(self.turtle.undo_last, "r")
@@ -111,23 +112,36 @@ class GUI:
         make_point_button = tk.Button(canvas.master, text="Make Point", command=self.turtle_properties.save_tuple)
         home_button = tk.Button(canvas.master, text="Home", command=self.turtle_properties.home)
         quit_button = tk.Button(canvas.master, text="Quit", command=quit)
-        pen_up_button = tk.Button(canvas.master, text="Pen Up", command=self.turtle_properties.set_pen_up)
-        pen_down_button = tk.Button(canvas.master, text="Pen Down", command=self.turtle_properties.set_pen_down)
+        pause_shape_button = tk.Button(canvas.master, text="Pause Shape", command=self.turtle_properties.pause_shape)
+        resume_shape_button = tk.Button(canvas.master, text="Resume Shape", command=self.turtle_properties.resume_shape)
         distance_button = tk.Button(canvas.master, text="Set Distance", command=self.send_off_distance)
-        make_code_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.tuple_of_tuples)
+        make_program_button = tk.Button(canvas.master, text="Make Program", command=self.turtle_properties.make_file)
+        clear_button = tk.Button(canvas.master, text="Clear", command=self.turtle_properties.clear)
         name_file_button = tk.Button(canvas.master, text="Name Program", command=self.name_file)
-        shape_file_button = tk.Button(canvas.master, text="Name Program", command=self.turtle_properties.set_shape_name)
+        shape_file_button = tk.Button(canvas.master, text="Name Shape", command=self.turtle_properties.set_shape_name)
         rgb_button = tk.Button(canvas.master, text="Submit Colours", command=self.send_off_colours)
-        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, self.special_height, window=undo_button)
-        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, self.special_height+2*self.tenth_screen_location, window=make_point_button)
-        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, self.special_height+2*self.tenth_screen_location, window=home_button)
-        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, self.special_height, window=quit_button)
-        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, self.special_height+self.tenth_screen_location, window=pen_up_button)
-        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location, self.special_height+self.tenth_screen_location, window=pen_down_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
+                                       self.special_height, window=undo_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
+                                       self.special_height+2*self.tenth_screen_location, window=make_point_button)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location,
+                                       self.special_height+2*self.tenth_screen_location, window=home_button)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location,
+                                       self.special_height, window=quit_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
+                                       self.special_height+self.tenth_screen_location, window=pause_shape_button)
+        self.user_canvas.create_window(self.half_screen_location+self.tenth_screen_location,
+                                       self.special_height+self.tenth_screen_location, window=resume_shape_button)
         self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, 0, window=distance_button)
-        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, -self.special_height, window=make_code_button)
-        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, -self.special_height-2*self.tenth_screen_location, window=name_file_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location, -self.special_height,
+                                       window=make_program_button)
+        self.user_canvas.create_window(self.half_screen_location + self.tenth_screen_location, -self.special_height,
+                                       window=clear_button)
+        self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
+                                       -self.special_height-2*self.tenth_screen_location, window=name_file_button)
         self.user_canvas.create_window(-self.half_screen_location, self.special_height, window=rgb_button)
+        self.user_canvas.create_window(self.half_screen_location - self.tenth_screen_location,
+                                       -self.special_height - self.tenth_screen_location, window=shape_file_button)
 
     def change_rgb_frame(self, red, green, blue):
         try:
@@ -188,6 +202,8 @@ class PointerTurtle:
         self.pointer_turtle.speed(0)
         self.current_y = 0
         self.current_x = 0
+        self.pause_shape_x = 0
+        self.pause_shape_y = 0
         self.distance = 20
         # list for the tuples that will be saved later and used else where in the class
         self.tuple_list = []
@@ -198,6 +214,19 @@ class PointerTurtle:
         # when called as a string I want to see the tuple list
         # to show the user the points they have saved
         return str(self.tuple_list)
+
+    def clear(self):
+        self.current_y = 0
+        self.current_x = 0
+        self.pause_shape_x = 0
+        self.pause_shape_y = 0
+        self.distance = 20
+        # list for the tuples that will be saved later and used else where in the class
+        self.tuple_list = []
+        self.file_name = "MyLittleTurtle"
+        self.shape_name = "MyVeryOwnShape"
+        self.pointer_turtle.clear()
+
 
     def undo_last(self):
         self.pointer_turtle.undo()
@@ -269,11 +298,17 @@ class PointerTurtle:
             blue = 0
         self.pointer_turtle.pencolor(red, green, blue)
 
-    def set_pen_up(self):
+    def pause_shape(self):
+        self.pause_shape_y = self.pointer_turtle.ycor()
+        self.pause_shape_x = self.pointer_turtle.xcor()
         self.pointer_turtle.pu()
 
-    def set_pen_down(self):
+    def resume_shape(self):
+        current_x = self.pointer_turtle.xcor()
+        current_y = self.pointer_turtle.ycor()
+        self.pointer_turtle.goto(self.pause_shape_x, self.pause_shape_y)
         self.pointer_turtle.pd()
+        self.pointer_turtle.goto(current_x, current_y)
 
     def set_file_name(self, name):
         self.file_name = name
@@ -281,23 +316,19 @@ class PointerTurtle:
     def set_shape_name(self, name):
         self.shape_name = name
 
-    def tuple_of_tuples(self):
+    def make_file(self):
         # this just makes a tuple of the tuples so when it prints out the code
         # so the user knows not to touch it if they don't want to change the shape
         tuple_of_tuples = tuple(self.tuple_list)
         file = open(f'{self.file_name}.py', "w")
         file.write(f'import turtle\n'
+                   f'screen = turtle.Screen()\n'
                    f'Tuples = {tuple_of_tuples}\n'
+                   f'{self.shape_name}_turtle = turtle.Turtle()\n'
+                   f'turtle.colormode(255)\n'
                    f'turtle.mode("logo")\n'
-                   f'turtle.begin_poly()\n'
-                   f'for i in Tuples:\n'
-                   f'    turtle.goto(i)\n'
-                   f'turtle.end_poly()\n'
-                   f'p = turtle.get_poly()\n'
-                   f'turtle.register_shape("{self.shape_name}", p)\n'
-                   f'turtle.shape("{self.shape_name}")\n'
-                   f'turtle.goto(0, 0)\n'
-                   f'turtle.clear()\n'
+                   f'screen.register_shape("{self.shape_name}", Tuples)\n'
+                   f'{self.shape_name}_turtle.shape("{self.shape_name}")\n'
                    f'turtle.mainloop()')
         file.close()
 
