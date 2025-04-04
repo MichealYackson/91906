@@ -238,9 +238,6 @@ class GUI:
         self.turtle_properties.set_file_name(file_name)
 
 
-
-
-
 # this class handles the turtle that will be used for making the shape
 class PointerTurtle:
     def __init__(self, turtle_name):
