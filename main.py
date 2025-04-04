@@ -76,20 +76,19 @@ class GUI:
         self.half_screen_location = self.screen_location / 2
         self.quarter_screen_location = self.screen_location / 4
         self.tenth_screen_location = self.screen_location / 10
-        self.entry_width = int(round(self.tenth_screen_location / 10, 0))
-        self.text_size = int(round(self.entry_width*1.5, 0))
+        self.entry_and_text_width = int(round(int(round(self.tenth_screen_location / 10, 0))*1.5, 0))
         self.special_height = -(self.quarter_screen_location + self.quarter_screen_location / 4)
         self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
 
         self.turtle_properties = turtle_name
         self.user_canvas = tk_canvas
 
-        self.distance_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.file_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.shape_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
-        self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_width)
+        self.distance_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
+        self.file_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
+        self.shape_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
+        self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
+        self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
+        self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
         self.red_frame = tk.Frame(self.user_canvas.master, bg="red", width=self.tenth_screen_location,
                                   height=self.tenth_screen_location)
         self.blue_frame = tk.Frame(self.user_canvas.master, bg="blue", width=self.tenth_screen_location,
@@ -134,7 +133,7 @@ class GUI:
                       "Pressing 'I' will ask for the distance you want to travel.\n"
                       "While pressing 'O' will ask to rename the turtles shape\n"
                       "and pressing 'p' will ask you to rename the file you makes name.\n")
-        label = tk.Label(self.user_canvas.master, textvariable=text_box, font=("arial", self.text_size),
+        label = tk.Label(self.user_canvas.master, textvariable=text_box, font=("arial", self.entry_and_text_width),
                          wraplength=self.half_screen_location)
         self.user_canvas.create_window(-self.half_screen_location-self.tenth_screen_location, 0, window=label)
 
@@ -155,18 +154,18 @@ class GUI:
                                    -self.special_height - self.tenth_screen_location, window=self.shape_name_entry)
 
     def build_gui_buttons(self):
-        undo_button = tk.Button(canvas.master, text="Undo", font=("arial", self.text_size), command=self.turtle_properties.undo_last)
-        make_point_button = tk.Button(canvas.master, text="Make Point", font=("arial", self.text_size), command=self.turtle_properties.save_tuple)
-        home_button = tk.Button(canvas.master, text="Home", font=("arial", self.text_size), command=self.turtle_properties.home)
-        quit_button = tk.Button(canvas.master, text="Quit", font=("arial", self.text_size), command=quit)
-        pause_shape_button = tk.Button(canvas.master, text="Pause Shape", font=("arial", self.text_size), command=self.turtle_properties.pause_shape)
-        resume_shape_button = tk.Button(canvas.master, text="Resume Shape", font=("arial", self.text_size), command=self.turtle_properties.resume_shape)
-        distance_button = tk.Button(canvas.master, text="Set Distance", font=("arial", self.text_size), command=self.send_off_distance)
-        make_program_button = tk.Button(canvas.master, text="Make Program", font=("arial", self.text_size), command=self.turtle_properties.make_file)
-        clear_button = tk.Button(canvas.master, text="Clear", font=("arial", self.text_size), command=self.turtle_properties.clear)
-        name_file_button = tk.Button(canvas.master, text="Name Program", font=("arial", self.text_size), command=self.name_file)
-        shape_file_button = tk.Button(canvas.master, text="Name Shape", font=("arial", self.text_size), command=self.turtle_properties.set_shape_name)
-        rgb_button = tk.Button(canvas.master, text="Submit Colours", font=("arial", self.text_size), command=self.send_off_colours)
+        undo_button = tk.Button(canvas.master, text="Undo", font=("arial", self.entry_and_text_width), command=self.turtle_properties.undo_last)
+        make_point_button = tk.Button(canvas.master, text="Make Point", font=("arial", self.entry_and_text_width), command=self.turtle_properties.save_tuple)
+        home_button = tk.Button(canvas.master, text="Home", font=("arial", self.entry_and_text_width), command=self.turtle_properties.home)
+        quit_button = tk.Button(canvas.master, text="Quit", font=("arial", self.entry_and_text_width), command=quit)
+        pause_shape_button = tk.Button(canvas.master, text="Pause Shape", font=("arial", self.entry_and_text_width), command=self.turtle_properties.pause_shape)
+        resume_shape_button = tk.Button(canvas.master, text="Resume Shape", font=("arial", self.entry_and_text_width), command=self.turtle_properties.resume_shape)
+        distance_button = tk.Button(canvas.master, text="Set Distance", font=("arial", self.entry_and_text_width), command=self.send_off_distance)
+        make_program_button = tk.Button(canvas.master, text="Make Program", font=("arial", self.entry_and_text_width), command=self.turtle_properties.make_file)
+        clear_button = tk.Button(canvas.master, text="Clear", font=("arial", self.entry_and_text_width), command=self.turtle_properties.clear)
+        name_file_button = tk.Button(canvas.master, text="Name Program", font=("arial", self.entry_and_text_width), command=self.name_file)
+        shape_file_button = tk.Button(canvas.master, text="Name Shape", font=("arial", self.entry_and_text_width), command=self.turtle_properties.set_shape_name)
+        rgb_button = tk.Button(canvas.master, text="Submit Colours", font=("arial", self.entry_and_text_width), command=self.send_off_colours)
         self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
                                        self.special_height, window=undo_button)
         self.user_canvas.create_window(self.half_screen_location-self.tenth_screen_location,
