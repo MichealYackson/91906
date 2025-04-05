@@ -1,3 +1,4 @@
+# Program written in python version 3.12
 # This imports the libraries used by this code and what they need from it
 import turtle as t
 import tkinter as tk
@@ -84,6 +85,7 @@ class GUI:
         ))
         self.special_height = -(self.quarter_screen_location + self.quarter_screen_location / 4)
         self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
+        self.user_font = "arial"
 
         self.turtle_properties = turtle_name
         self.user_canvas = tk_canvas
@@ -194,7 +196,7 @@ class GUI:
         label = tk.Label(
             self.user_canvas.master,
             textvariable=text_box,
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             wraplength=self.half_screen_location
         )
         self.user_canvas.create_window(
@@ -245,73 +247,73 @@ class GUI:
         undo_button = tk.Button(
             canvas.master,
             text="Undo",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.undo_last
         )
         make_point_button = tk.Button(
             canvas.master,
             text="Make Point",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.save_tuple
         )
         home_button = tk.Button(
             canvas.master,
             text="Home",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.home
         )
         quit_button = tk.Button(
             canvas.master,
             text="Quit",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=quit
         )
         pause_shape_button = tk.Button(
             canvas.master,
             text="Pause Shape",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.pause_shape
         )
         resume_shape_button = tk.Button(
             canvas.master,
             text="Resume Shape",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.resume_shape
         )
         distance_button = tk.Button(
             canvas.master,
             text="Set Distance",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.send_off_distance
         )
         make_program_button = tk.Button(
             canvas.master,
             text="Make Program",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.make_file
         )
         clear_button = tk.Button(
             canvas.master,
             text="Clear",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.clear
         )
         name_file_button = tk.Button(
             canvas.master,
             text="Name Program",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.name_file
         )
         shape_file_button = tk.Button(
             canvas.master,
             text="Name Shape",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.turtle_properties.set_shape_name
         )
         rgb_button = tk.Button(
             canvas.master,
             text="Submit Colours",
-            font=("arial", self.entry_and_text_width),
+            font=(self.user_font, self.entry_and_text_width),
             command=self.send_off_colours
         )
         self.user_canvas.create_window(
@@ -584,6 +586,7 @@ class PointerTurtle:
 
 
 def set_resolution():
+    # function to get a desired width of the box that is the limits of the turtle for the program
     looping = True
     while looping:
         question = (
@@ -596,23 +599,31 @@ def set_resolution():
             looping = False
         except:
             print("Sorry that input wasn't valid, please try again.\n")
-    return answer
+    return answer # noqa
 
 
 if __name__ == '__main__':
+    # gets the total width of the turtle box
     resolution = set_resolution()
+    # set screen to t.screen() object and a canvas for tkinter is assigned to it
     screen = t.Screen()
     canvas = screen.getcanvas()
+    # sets up the turtle mode to "logo" and "colormode(255)" to better control the turtle and its colour
     t.mode("logo")
     t.colormode(255)
+    # sets up a turtle for the rest of the program to use
     my_little_turtle = Turtle()
+    # a class that adds additional functions to the turtle for easier use
     Turtle = PointerTurtle(my_little_turtle)
+    # a class that allows for keyboard inputs to be used
     Controller = Controller(Turtle)
     Controller.main_loop()
     Turtle.brush()
+    # a class that sets up the GUI that is used by the user
     User_GUI = GUI(Turtle, canvas, resolution)
     User_GUI.build_frames()
     User_GUI.build_text_boxes()
     User_GUI.build_gui_entries()
     User_GUI.build_gui_buttons()
+    # Mainloop() finishes the initialisation of the program and is event driven afterward
     t.mainloop()
