@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="trailing changing entry size, it looks nicer">
+    <list default="true" id="4caedeb7-d3c1-46a4-9f60-99e31f72b83a" name="Changes" comment="pre pep8 chatgpt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MyLittleTurtle.py" beforeDir="false" afterPath="$PROJECT_DIR$/MyLittleTurtle.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -258,7 +258,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743746151855</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="pre pep8 chatgpt">
+      <option name="closed" value="true" />
+      <created>1743766712501</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1743766712501</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -291,6 +299,7 @@
     <MESSAGE value="updated the file making code and any other changes to what my client wanted" />
     <MESSAGE value="testing styling now, we're officially finished" />
     <MESSAGE value="trailing changing entry size, it looks nicer" />
-    <option name="LAST_COMMIT_MESSAGE" value="trailing changing entry size, it looks nicer" />
+    <MESSAGE value="pre pep8 chatgpt" />
+    <option name="LAST_COMMIT_MESSAGE" value="pre pep8 chatgpt" />
   </component>
 </project>
