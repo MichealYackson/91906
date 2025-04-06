@@ -453,6 +453,8 @@ class PointerTurtle:
         self.tuple_list = []
         self.file_name = "MyLittleTurtle"
         self.shape_name = "MyVeryOwnShape"
+        self.history_of_actions = []
+        self.movement_list_item = "movement action"
 
     def __str__(self):
         # When called as a string, show the tuple list to the user
@@ -470,9 +472,17 @@ class PointerTurtle:
         self.pointer_turtle.clear()
 
     def undo_last(self):
+        last_action = len(self.history_of_actions) - 1
+        try:
+            if self.history_of_actions[last_action] == "made tuple":
+                self.tuple_list.pop()
+        except:
+            pass
         self.pointer_turtle.undo()
+        self.history_of_actions.pop()
 
     def home(self):
+        self.history_of_actions.append(self.movement_list_item)
         self.current_y = 0
         self.current_x = 0
         self.pointer_turtle.goto(self.current_x, self.current_y)
@@ -504,6 +514,8 @@ class PointerTurtle:
     def save_tuple(self):
         # When saving a tuple, make a dot to mark the position
         self.locate_thy_self()
+        self.history_of_actions.pop()
+        self.history_of_actions.append("made tuple")
         width = int(round(self.distance / 2, 0))
         self.pointer_turtle.dot(width, "blue")
         current_tuple = (self.current_x, self.current_y)
@@ -511,9 +523,14 @@ class PointerTurtle:
 
     def brush(self):
         self.pointer_turtle.speed(0)
-        screen.onscreenclick(self.pointer_turtle.goto)
+        screen.onscreenclick(self.click)
+
+    def click(self, x, y):
+        self.pointer_turtle.goto(x,y)
+        self.history_of_actions.append(self.movement_list_item)
 
     def locate_thy_self(self):
+        self.history_of_actions.append(self.movement_list_item)
         self.current_y = self.pointer_turtle.ycor()
         self.current_x = self.pointer_turtle.xcor()
 
