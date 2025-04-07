@@ -10,9 +10,11 @@ from tkinter import ttk
 
 class Controller:
     def __init__(self, turtle_name):
+        # this lets the Controller use the other classes functions
         self.turtle = turtle_name
 
     def main_loop(self):
+        # Prints out instructions in the command line
         guidelines = (
             f'Here are the controls for the program:\n'
             "'WASD' or arrow keys is used for movement\n"
@@ -27,6 +29,7 @@ class Controller:
             "and pressing 'p' will ask you to rename the file you makes name.\n"
         )
         print(guidelines)
+        # Binds all the key presses to functions using screen onkey press or release
         screen.onkeypress(self.turtle.move_up, "w")
         screen.onkeypress(self.turtle.move_down, "s")
         screen.onkeypress(self.turtle.move_right, "d")
@@ -46,6 +49,7 @@ class Controller:
         screen.onkeypress(self.ask_for_distance, "i")
         screen.onkeypress(self.ask_for_shape_name, "o")
         screen.onkeypress(self.ask_for_program_name, "p")
+        # listen() is used to bring focus back to the screen instead of the command line or tk widgets
         screen.listen()
 
     def ask_for_distance(self):
@@ -76,6 +80,8 @@ class Controller:
 
 class GUI:
     def __init__(self, turtle_name, tk_canvas, user_resolution):
+        # changeable variables used throughout the class
+        # screen location allows for easy adjustable scaling of tk widgets
         self.screen_location = user_resolution
         self.half_screen_location = self.screen_location / 2
         self.quarter_screen_location = self.screen_location / 4
@@ -87,15 +93,20 @@ class GUI:
         self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
         self.user_font = "arial"
 
+        # calling the frame to be easily used for tk widgets
+        # also calls the class that controls and manages the turtle to add more functionality to the widgets
         self.turtle_properties = turtle_name
         self.user_canvas = tk_canvas
 
+        # states the entries to be later used in multiple functions so they have to be callable anywhere in the class
         self.distance_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
         self.file_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
         self.shape_name_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
         self.red_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
         self.blue_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
         self.green_entry = ttk.Entry(self.user_canvas.master, width=self.entry_and_text_width)
+
+        # frames can change colour and therefore need to be used in multiple functions like the entries
         self.red_frame = tk.Frame(
             self.user_canvas.master,
             bg="red",
@@ -122,8 +133,12 @@ class GUI:
         )
 
     def build_frames(self):
+        # this function is used to build the frame where the turtle is kept
+        # screen filler is a variable used to determine the sizes of the frames since we can not use fill
+        # since we are not packing the widgets in just with tkinter
         screen_filler = self.screen_location * 1.5
         box_colour = "dark grey"
+        # places 4 different frames around to give a nice square empty box for the turtle to make a shape
         frame = tk.Frame(
             self.user_canvas.master,
             bg=box_colour,
@@ -179,6 +194,7 @@ class GUI:
         )
 
     def build_text_boxes(self):
+        # this function states what mainloop does but in a tk label for easier visual use
         text_box = tk.StringVar()
         text_box.set(
             f'Here are the controls for the program:\n'
@@ -206,12 +222,15 @@ class GUI:
         )
 
     def build_gui_entries(self):
+        # this function places the entries around the screen
+        # .lift() entry lifts all the entries to the front after build_frames covers them with frames
         self.red_entry.lift()
         self.blue_entry.lift()
         self.green_entry.lift()
         self.distance_entry.lift()
         self.file_name_entry.lift()
         self.shape_name_entry.lift()
+        # places the entries on the canvas that were created in __init__
         self.user_canvas.create_window(
             -self.quarter_screen_location,
             self.special_height,
@@ -244,6 +263,8 @@ class GUI:
         )
 
     def build_gui_buttons(self):
+        # this function places down all the buttons down on the screen
+        # this function creates all the buttons because they do not need to be in the __init__
         undo_button = tk.Button(
             canvas.master,
             text="Undo",
@@ -296,7 +317,7 @@ class GUI:
             canvas.master,
             text="Clear",
             font=(self.user_font, self.entry_and_text_width),
-            command=self.turtle_properties.clear
+            command=self.turtle_properties.clear_turtle
         )
         name_file_button = tk.Button(
             canvas.master,
@@ -316,6 +337,7 @@ class GUI:
             font=(self.user_font, self.entry_and_text_width),
             command=self.send_off_colours
         )
+        # this section places down all the buttons
         self.user_canvas.create_window(
             self.half_screen_location - self.tenth_screen_location,
             self.special_height,
@@ -378,6 +400,7 @@ class GUI:
         )
 
     def change_rgb_frame(self, red, green, blue):
+        # this function changes the colour of the black frame to what the user has set from the rgb picker
         try:
             red = int(red)
         except:
@@ -393,6 +416,7 @@ class GUI:
         except:
             print("An exception occurred")
             blue = 0
+        # rgb_value converts the 16bit colour to hex
         rgb_value = f'#{red:02x}{green:02x}{blue:02x}'
         self.rgb_frame = tk.Frame(
             self.user_canvas.master,
@@ -407,6 +431,9 @@ class GUI:
         )
 
     def send_off_colours(self):
+        # this function get the inputs from the entries and sends it off to change
+        # the turtles colour and the tkinter frames colour
+        # screen.listen() changes the focus from the entries back to the turtle screen
         screen.listen()
         red = self.red_entry.get()
         blue = self.blue_entry.get()
@@ -417,24 +444,24 @@ class GUI:
             blue = "00"
         if green == "":
             green = "00"
-        print(f'R:{red} G:{green} B:{blue}')
         self.turtle_properties.set_pen_colour(red, green, blue)
         self.change_rgb_frame(red, green, blue)
 
     def send_off_distance(self):
+        # gets the distance the user has input into the entry and sends it off to the turtle to handle
+        # screen.listen() changes the focus from the entries back to the turtle screen
         screen.listen()
         distance = self.distance_entry.get()
-        print(f'{distance}')
         self.turtle_properties.get_distance(distance)
 
     def name_file(self):
+        # gets the name the user has input into the entry and sends it off to the turtle to handle
+        # screen.listen() changes the focus from the entries back to the turtle screen
         screen.listen()
         file_name = self.file_name_entry.get()
-        print(f'{file_name}')
         self.turtle_properties.set_file_name(file_name)
 
 
-# This class handles the turtle that will be used for making the shape
 class PointerTurtle:
     def __init__(self, turtle_name):
         # Names the turtle we will be using and states where the turtle is
@@ -455,23 +482,20 @@ class PointerTurtle:
         self.shape_name = "MyVeryOwnShape"
         self.history_of_actions = []
         self.movement_list_item = "movement action"
+        screen.onscreenclick(self.click)
 
     def __str__(self):
         # When called as a string, show the tuple list to the user
         return str(self.tuple_list)
 
-    def clear(self):
-        self.current_y = 0
-        self.current_x = 0
-        self.pause_shape_x = 0
-        self.pause_shape_y = 0
-        self.distance = 20
+    def clear_turtle(self):
+        # essentially resets the location and tuple variables back to what they were in the __init__ for a fresh slate
+        self.home()
         self.tuple_list = []
-        self.file_name = "MyLittleTurtle"
-        self.shape_name = "MyVeryOwnShape"
         self.pointer_turtle.clear()
 
     def undo_last(self):
+        # undoes the last movement action or tuple action
         last_action = len(self.history_of_actions) - 1
         try:
             if self.history_of_actions[last_action] == "made tuple":
@@ -482,6 +506,7 @@ class PointerTurtle:
         self.history_of_actions.pop()
 
     def home(self):
+        # returns the turtle  back to the centre of the shape and canvas
         self.history_of_actions.append(self.movement_list_item)
         self.current_y = 0
         self.current_x = 0
@@ -492,21 +517,25 @@ class PointerTurtle:
         self.distance = int(answer)
 
     def move_up(self):
+        # moves up the turtle the set distance
         self.locate_thy_self()
         self.current_y += self.distance
         self.pointer_turtle.sety(self.current_y)
 
     def move_down(self):
+        # moves down the turtle the set distance
         self.locate_thy_self()
         self.current_y -= self.distance
         self.pointer_turtle.sety(self.current_y)
 
     def move_right(self):
+        # moves the turtle to the right the set distance
         self.locate_thy_self()
         self.current_x += self.distance
         self.pointer_turtle.setx(self.current_x)
 
     def move_left(self):
+        # moves the turtle to the left the set distance
         self.locate_thy_self()
         self.current_x -= self.distance
         self.pointer_turtle.setx(self.current_x)
@@ -521,20 +550,20 @@ class PointerTurtle:
         current_tuple = (self.current_x, self.current_y)
         self.tuple_list.append(current_tuple)
 
-    def brush(self):
-        self.pointer_turtle.speed(0)
-        screen.onscreenclick(self.click)
-
     def click(self, x, y):
+        # when the screen is clicked it will move the turtle there and add that movement to the history_of_actions
         self.pointer_turtle.goto(x,y)
         self.history_of_actions.append(self.movement_list_item)
 
     def locate_thy_self(self):
+        # before the turtle moves it has to locate itself before it does so to prevent any erros from happening
+        # due to the ability to click anywhere on the screen and for WASD controls to be used at the same time
         self.history_of_actions.append(self.movement_list_item)
         self.current_y = self.pointer_turtle.ycor()
         self.current_x = self.pointer_turtle.xcor()
 
     def set_pen_colour(self, red, green, blue):
+        # Sets the pen and fill colour of the turtle to that of the colour picker
         try:
             red = int(red)
         except:
@@ -565,11 +594,13 @@ class PointerTurtle:
         )
 
     def pause_shape(self):
+        # pauses the turtles movement and allows for greater precision
         self.pause_shape_y = self.pointer_turtle.ycor()
         self.pause_shape_x = self.pointer_turtle.xcor()
         self.pointer_turtle.pu()
 
     def resume_shape(self):
+        # resumes the turtles movement and allows for greater precision
         current_x = self.pointer_turtle.xcor()
         current_y = self.pointer_turtle.ycor()
         self.pointer_turtle.goto(self.pause_shape_x, self.pause_shape_y)
@@ -577,9 +608,11 @@ class PointerTurtle:
         self.pointer_turtle.goto(current_x, current_y)
 
     def set_file_name(self, name):
+        # changes the name of the file
         self.file_name = name
 
     def set_shape_name(self, name):
+        # changes the name of the turtle shape being made
         self.shape_name = name
 
     def make_file(self):
@@ -635,7 +668,6 @@ if __name__ == '__main__':
     # a class that allows for keyboard inputs to be used
     Controller = Controller(Turtle)
     Controller.main_loop()
-    Turtle.brush()
     # a class that sets up the GUI that is used by the user
     User_GUI = GUI(Turtle, canvas, resolution)
     User_GUI.build_frames()
