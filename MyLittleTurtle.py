@@ -2,7 +2,7 @@ import turtle
 screen = turtle.Screen()
 turtle.colormode(255)
 turtle.mode("logo")
-Tuples = ((43.0, 105.0), (87.0, 169.0))
+Tuples = ((105.0, 372.0),)
 MyVeryOwnShape_turtle = turtle.Turtle()
 MyVeryOwnShape_turtle.color(0, 0, 0)
 screen.register_shape("MyVeryOwnShape", Tuples)

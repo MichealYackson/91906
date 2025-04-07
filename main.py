@@ -463,8 +463,9 @@ class GUI:
 
 
 class PointerTurtle:
-    def __init__(self, turtle_name):
+    def __init__(self, turtle_name, shape_size):
         # Names the turtle we will be using and states where the turtle is
+        self.screen_size = shape_size/5
         self.pointer_turtle = turtle_name
         self.pointer_turtle.setundobuffer(255 * 255 * 255)
         self.pointer_turtle.speed(0)
@@ -553,7 +554,7 @@ class PointerTurtle:
     def click(self, x, y):
         # when the screen is clicked it will move the turtle there and add that movement to the history_of_actions
         self.pointer_turtle.goto(x,y)
-        self.history_of_actions.append(self.movement_list_item)
+        self.locate_thy_self()
 
     def locate_thy_self(self):
         # before the turtle moves it has to locate itself before it does so to prevent any erros from happening
@@ -561,6 +562,17 @@ class PointerTurtle:
         self.history_of_actions.append(self.movement_list_item)
         self.current_y = self.pointer_turtle.ycor()
         self.current_x = self.pointer_turtle.xcor()
+        print(self.current_x, self.current_y)
+        if self.screen_size < self.current_y:
+            self.current_y = self.screen_size
+        if self.screen_size < self.current_x:
+            self.current_x = self.screen_size
+        if -self.screen_size > self.current_y:
+            self.current_y = -self.screen_size
+        if -self.screen_size > self.current_x:
+            self.current_x = -self.screen_size
+
+
 
     def set_pen_colour(self, red, green, blue):
         # Sets the pen and fill colour of the turtle to that of the colour picker
@@ -664,7 +676,7 @@ if __name__ == '__main__':
     # sets up a turtle for the rest of the program to use
     my_little_turtle = Turtle()
     # a class that adds additional functions to the turtle for easier use
-    Turtle = PointerTurtle(my_little_turtle)
+    Turtle = PointerTurtle(my_little_turtle, resolution)
     # a class that allows for keyboard inputs to be used
     Controller = Controller(Turtle)
     Controller.main_loop()
