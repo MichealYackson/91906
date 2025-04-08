@@ -503,8 +503,14 @@ class PointerTurtle:
                 self.tuple_list.pop()
         except:
             pass
-        self.pointer_turtle.undo()
-        self.history_of_actions.pop()
+        try:
+            # has to undo 3 to move back correctly
+            # if spammed too hard a german error occurs
+            for i in range(3):
+                self.pointer_turtle.undo()
+            self.history_of_actions.pop()
+        except:
+            pass
 
     def home(self):
         # returns the turtle  back to the centre of the shape and canvas
@@ -562,6 +568,7 @@ class PointerTurtle:
         self.history_of_actions.append(self.movement_list_item)
         self.current_y = self.pointer_turtle.ycor()
         self.current_x = self.pointer_turtle.xcor()
+        self.set_turtle_colour_properties()
         print(self.current_x, self.current_y)
         if self.screen_size < self.current_y:
             self.current_y = self.screen_size
@@ -594,6 +601,10 @@ class PointerTurtle:
         self.pointer_turtle_red = red
         self.pointer_turtle_green = green
         self.pointer_turtle_blue = blue
+        self.set_turtle_colour_properties()
+
+    def set_turtle_colour_properties(self):
+        self.pointer_turtle.pensize(1)
         self.pointer_turtle.pencolor(
             self.pointer_turtle_red,
             self.pointer_turtle_green,
