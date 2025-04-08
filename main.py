@@ -60,20 +60,33 @@ class Controller:
         try:
             answer = int(answer)
             self.turtle.get_distance(answer)
+        except KeyboardInterrupt:
+            exit()
         except ValueError:
             print("Sorry that input wasn't valid, press 'i' to try again\n")
 
     def ask_for_program_name(self):
-        # Tells the turtle class how far it is allowed to move
+        # tells the turtle what to name the program
         question = "What do you want to name your file?\n"
-        # Uses try except to avoid errors
+        illegal_characters = ["#", "%", "&", "{", "}", "\\", "<", ">",
+                              "*", "?", "/", " ", "$", "!", '"', "'", ":",
+                              "@", "+", "`", "|", "="]
         answer = input(question)
+
+        # Remove all illegal characters from the answer
+        cleaned_answer = ''.join([char for char in answer if char not in illegal_characters])
+
+        if cleaned_answer != answer:
+            print(f"Sorry, your input contained illegal characters. They have been removed.\n"
+                  f"Here is the cleaned filename: {cleaned_answer}\n"
+                  f"Here is a list of illegal characters: {illegal_characters}")
+            answer = cleaned_answer  # Use the cleaned version
+
         self.turtle.set_file_name(answer)
 
     def ask_for_shape_name(self):
-        # Tells the turtle class how far it is allowed to move
+        # Tells the turtle class what to name the shape
         question = "What do you want to name your shape?\n"
-        # Uses try except to avoid errors
         answer = input(question)
         self.turtle.set_shape_name(answer)
 
@@ -403,17 +416,23 @@ class GUI:
         # this function changes the colour of the black frame to what the user has set from the rgb picker
         try:
             red = int(red)
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("An exception occurred")
             red = 0
         try:
             green = int(green)
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("An exception occurred")
             green = 0
         try:
             blue = int(blue)
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("An exception occurred")
             blue = 0
         # rgb_value converts the 16bit colour to hex
@@ -459,6 +478,18 @@ class GUI:
         # screen.listen() changes the focus from the entries back to the turtle screen
         screen.listen()
         file_name = self.file_name_entry.get()
+        illegal_characters = ["#", "%", "&", "{", "}", "\\", "<", ">",
+                              "*", "?", "/", " ", "$" ,"!", '"', "'", ":",
+                              "@", "+", "`", "|", "="]
+        # Remove all illegal characters from the answer
+        cleaned_file_name = ''.join([char for char in file_name if char not in illegal_characters])
+
+        if cleaned_file_name != file_name:
+            print(f"Sorry, your input contained illegal characters. They have been removed.\n"
+                  f"Here is the cleaned filename: {cleaned_file_name}\n"
+                  f"Here is a list of illegal characters: {illegal_characters}")
+            file_name = cleaned_file_name  # Use the cleaned version
+
         self.turtle_properties.set_file_name(file_name)
 
 
@@ -501,7 +532,9 @@ class PointerTurtle:
         try:
             if self.history_of_actions[last_action] == "made tuple":
                 self.tuple_list.pop()
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             pass
         try:
             # has to undo 3 to move back correctly
@@ -509,7 +542,9 @@ class PointerTurtle:
             for i in range(3):
                 self.pointer_turtle.undo()
             self.history_of_actions.pop()
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             pass
 
     def home(self):
@@ -585,17 +620,23 @@ class PointerTurtle:
         # Sets the pen and fill colour of the turtle to that of the colour picker
         try:
             red = int(red)
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("An exception occurred")
             red = 0
         try:
             green = int(green)
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("An exception occurred")
             green = 0
         try:
             blue = int(blue)
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("An exception occurred")
             blue = 0
         self.pointer_turtle_red = red
@@ -670,7 +711,9 @@ def set_resolution():
         try:
             answer = int(answer)
             looping = False
-        except:
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
             print("Sorry that input wasn't valid, please try again.\n")
     return answer # noqa
 
