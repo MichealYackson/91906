@@ -91,7 +91,7 @@ class GUI:
         ))
         self.special_height = -(self.quarter_screen_location + self.quarter_screen_location / 4)
         self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
-        self.user_font = "arial"
+        self.user_font = "Arial"
 
         # calling the frame to be easily used for tk widgets
         # also calls the class that controls and manages the turtle to add more functionality to the widgets
