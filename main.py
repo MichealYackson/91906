@@ -587,7 +587,7 @@ class PointerTurtle:
         except IndexError:
             pass
         try:
-            # checks if a tuple was made during the last action and deletes it if it point was undone
+            # checks if a tuple was made during the last action and deletes it if is point was undone
             if self.history_of_actions[last_action] == "made tuple":
                 self.tuple_list.pop()
         except IndexError:
