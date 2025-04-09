@@ -567,26 +567,41 @@ class PointerTurtle:
         # undoes the last movement action or tuple action
         last_action = len(self.history_of_actions) - 1
         try:
-            if self.history_of_actions[last_action] == "made tuple":
-                self.tuple_list.pop()
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            pass
+            # if an undo was last did it will first get rid of it before checking for anything else
+            if self.history_of_actions[last_action] == "set properties after undo":
+                for i in range(3):
+                    self.pointer_turtle.undo()
+                self.history_of_actions.pop()
+                last_action = len(self.history_of_actions) - 1
         except IndexError:
             pass
         try:
-            # has to undo 3 to move back correctly
-            # if spammed too hard a german error occurs
+            # then it checks if the colour picker was used to undo the colour change enough times for
+            # turtle undogoto to occur, does not always work but is much more reliable than not having it
+            while self.history_of_actions[last_action] == "changed colour":
+                print(self.history_of_actions[last_action])
+                self.pointer_turtle.undo()
+                self.history_of_actions.pop()
+                last_action = len(self.history_of_actions) - 1
+                print(self.history_of_actions[last_action])
+        except IndexError:
+            pass
+        try:
+            # checks if a tuple was made during the last action and deletes it if it point was undone
+            if self.history_of_actions[last_action] == "made tuple":
+                self.tuple_list.pop()
+        except IndexError:
+            pass
+        try:
+            # has to undo 3 to move back correctly because of the turtle functions it does
             for i in range(4):
                 self.pointer_turtle.undo()
             self.history_of_actions.pop()
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            pass
         except IndexError:
             pass
+        self.set_turtle_colour_properties()
+        self.history_of_actions.append("set properties after undo")
+
 
     def home(self):
         # returns the turtle  back to the centre of the shape and canvas
@@ -665,6 +680,7 @@ class PointerTurtle:
         self.pointer_turtle_green = green
         self.pointer_turtle_blue = blue
         self.set_turtle_colour_properties()
+        self.history_of_actions.append("changed colour")
 
     def set_turtle_colour_properties(self):
         self.pointer_turtle.pensize(1)
