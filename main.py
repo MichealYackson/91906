@@ -7,6 +7,49 @@ from turtle import Turtle
 from turtle import Screen
 from tkinter import ttk
 
+def set_resolution():
+    # function to get a desired width of the box that is the limits of the turtle for the program
+    looping = True
+    while looping:
+        question = (
+            f'How wide do you want to make your canvas for your turtle?\n'
+            '(values between 500 to 1500 work nicely)\n'
+        )
+        answer = input(question)
+        try:
+            answer = int(answer)
+            if answer > 1500:
+                    print("Sorry that number is too big")
+            else:
+                if answer < 500:
+                    print("Sorry that number is too small")
+                else:
+                    looping = False
+        except KeyboardInterrupt:
+            exit()
+        except ValueError:
+            print("Sorry that input wasn't valid, please try again with a number.\n")
+    return answer # noqa
+
+def check_colour_value(colour):
+    try:
+        colour = int(colour)
+        if colour > 255:
+                print("Sorry that number is too big")
+                colour = 255
+        else:
+            if colour < 0:
+                print("Sorry that number is too small")
+                colour = 0
+            else:
+                pass
+    except ValueError:
+        if colour == "":
+            colour = 0
+        else:
+            print("An exception occurred, please try again with a number between 0 and 255")
+            colour = 0
+    return colour
 
 class Controller:
     def __init__(self, turtle_name):
@@ -104,7 +147,7 @@ class GUI:
         ))
         self.special_height = -(self.quarter_screen_location + self.quarter_screen_location / 4)
         self.other_special_height = -(self.quarter_screen_location + self.quarter_screen_location / 2)
-        self.user_font = "Arial"
+        self.user_font = "Comic sans ms"
 
         # calling the frame to be easily used for tk widgets
         # also calls the class that controls and manages the turtle to add more functionality to the widgets
@@ -454,15 +497,9 @@ class GUI:
         # the turtles colour and the tkinter frames colour
         # screen.listen() changes the focus from the entries back to the turtle screen
         screen.listen()
-        red = self.red_entry.get()
-        blue = self.blue_entry.get()
-        green = self.green_entry.get()
-        if red == "":
-            red = "00"
-        if blue == "":
-            blue = "00"
-        if green == "":
-            green = "00"
+        red = check_colour_value(self.red_entry.get())
+        blue = check_colour_value(self.blue_entry.get())
+        green = check_colour_value(self.green_entry.get())
         self.turtle_properties.set_pen_colour(red, green, blue)
         self.change_rgb_frame(red, green, blue)
 
@@ -487,7 +524,7 @@ class GUI:
         if cleaned_file_name != file_name:
             print(f"Sorry, your input contained illegal characters. They have been removed.\n"
                   f"Here is the cleaned filename: {cleaned_file_name}\n"
-                  f"Here is a list of illegal characters: {illegal_characters}")
+                  f"Here is a list of illegal characters:\n {illegal_characters}")
             file_name = cleaned_file_name  # Use the cleaned version
 
         self.turtle_properties.set_file_name(file_name)
@@ -536,15 +573,19 @@ class PointerTurtle:
             exit()
         except ValueError:
             pass
+        except IndexError:
+            pass
         try:
             # has to undo 3 to move back correctly
             # if spammed too hard a german error occurs
-            for i in range(3):
+            for i in range(4):
                 self.pointer_turtle.undo()
             self.history_of_actions.pop()
         except KeyboardInterrupt:
             exit()
         except ValueError:
+            pass
+        except IndexError:
             pass
 
     def home(self):
@@ -614,31 +655,8 @@ class PointerTurtle:
         if -self.screen_size > self.current_x:
             self.current_x = -self.screen_size
 
-
-
     def set_pen_colour(self, red, green, blue):
         # Sets the pen and fill colour of the turtle to that of the colour picker
-        try:
-            red = int(red)
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("An exception occurred")
-            red = 0
-        try:
-            green = int(green)
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("An exception occurred")
-            green = 0
-        try:
-            blue = int(blue)
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("An exception occurred")
-            blue = 0
         self.pointer_turtle_red = red
         self.pointer_turtle_green = green
         self.pointer_turtle_blue = blue
@@ -646,6 +664,7 @@ class PointerTurtle:
 
     def set_turtle_colour_properties(self):
         self.pointer_turtle.pensize(1)
+        self.pointer_turtle.speed(0)
         self.pointer_turtle.pencolor(
             self.pointer_turtle_red,
             self.pointer_turtle_green,
@@ -697,25 +716,6 @@ class PointerTurtle:
             f'turtle.mainloop()'
         )
         file.close()
-
-
-def set_resolution():
-    # function to get a desired width of the box that is the limits of the turtle for the program
-    looping = True
-    while looping:
-        question = (
-            f'How wide do you want to make your canvas for your turtle?\n'
-            '(values between 500 to 1500 work nicely)\n'
-        )
-        answer = input(question)
-        try:
-            answer = int(answer)
-            looping = False
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("Sorry that input wasn't valid, please try again.\n")
-    return answer # noqa
 
 
 if __name__ == '__main__':
