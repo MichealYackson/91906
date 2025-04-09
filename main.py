@@ -2,9 +2,7 @@
 # This imports the libraries used by this code and what they need from it
 import turtle as t
 import tkinter as tk
-from contextlib import nullcontext
 from turtle import Turtle
-from turtle import Screen
 from tkinter import ttk
 
 def set_resolution():
@@ -32,6 +30,8 @@ def set_resolution():
     return answer # noqa
 
 def check_colour_value(colour):
+    # checks the colour value of the colour pickers entries
+    # method does not require self values and therefore does not have to be within the class
     try:
         colour = int(colour)
         if colour > 255:
@@ -646,6 +646,10 @@ class PointerTurtle:
         self.current_x = self.pointer_turtle.xcor()
         self.set_turtle_colour_properties()
         print(self.current_x, self.current_y)
+        """ this section doesn't work when clicking on the screen
+         this error could be due to goto as speed 0 not being fast enough for the turtle to notice it has gone
+         beyond the dedicated borders. a fix could be to teleport the turtle first and then drag it back from its
+         original location to there to make sure it gets the right cords before drawing"""
         if self.screen_size < self.current_y:
             self.current_y = self.screen_size
         if self.screen_size < self.current_x:
