@@ -34,7 +34,7 @@ def check_colour_value(colour):
     # method does not require self values and therefore does not have to be within the class
     try:
         colour = float(colour)
-        colour = int(round(colour / 2, 0))
+        colour = int(round(colour, 0))
         if colour > 255:
                 print("Sorry that number is too big for a colour.\n"
                       "try a value between 0 and 255.")
