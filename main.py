@@ -33,13 +33,16 @@ def check_colour_value(colour):
     # checks the colour value of the colour pickers entries
     # method does not require self values and therefore does not have to be within the class
     try:
-        colour = int(colour)
+        colour = float(colour)
+        colour = int(round(colour / 2, 0))
         if colour > 255:
-                print("Sorry that number is too big")
+                print("Sorry that number is too big for a colour.\n"
+                      "try a value between 0 and 255.")
                 colour = 255
         else:
             if colour < 0:
-                print("Sorry that number is too small")
+                print("Sorry that number is too small for a colour.\n"
+                      "try a value between 0 and 255.")
                 colour = 0
             else:
                 pass
@@ -47,7 +50,7 @@ def check_colour_value(colour):
         if colour == "":
             colour = 0
         else:
-            print("An exception occurred, please try again with a number between 0 and 255")
+            print("An exception occurred, please try again with a number between 0 and 255.")
             colour = 0
     return colour
 
@@ -457,27 +460,9 @@ class GUI:
 
     def change_rgb_frame(self, red, green, blue):
         # this function changes the colour of the black frame to what the user has set from the rgb picker
-        try:
-            red = int(red)
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("An exception occurred")
-            red = 0
-        try:
-            green = int(green)
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("An exception occurred")
-            green = 0
-        try:
-            blue = int(blue)
-        except KeyboardInterrupt:
-            exit()
-        except ValueError:
-            print("An exception occurred")
-            blue = 0
+        red = check_colour_value(red)
+        green = check_colour_value(green)
+        blue = check_colour_value(blue)
         # rgb_value converts the 16bit colour to hex
         rgb_value = f'#{red:02x}{green:02x}{blue:02x}'
         self.rgb_frame = tk.Frame(
@@ -537,6 +522,7 @@ class PointerTurtle:
         self.pointer_turtle = turtle_name
         self.pointer_turtle.setundobuffer(255 * 255 * 255)
         self.pointer_turtle.speed(0)
+        self.pointer_turtle.shape("classic")
         self.current_y = 0
         self.current_x = 0
         self.pause_shape_x = 0
@@ -549,7 +535,7 @@ class PointerTurtle:
         self.tuple_list = []
         self.file_name = "MyLittleTurtle"
         self.shape_name = "MyVeryOwnShape"
-        self.history_of_actions = []
+        self.history_of_actions = ["set properties after undo"]
         self.movement_list_item = "movement action"
         screen.onscreenclick(self.click)
 
@@ -593,8 +579,8 @@ class PointerTurtle:
         except IndexError:
             pass
         try:
-            # has to undo 3 to move back correctly because of the turtle functions it does
-            for i in range(4):
+            # has to undo 5 to move back correctly because of the turtle functions it does
+            for i in range(5):
                 self.pointer_turtle.undo()
             self.history_of_actions.pop()
         except IndexError:
@@ -602,13 +588,19 @@ class PointerTurtle:
         self.set_turtle_colour_properties()
         self.history_of_actions.append("set properties after undo")
 
+    def move_turtle(self):
+        # changes the turtles direction it faces and makes it go there
+        heading = self.pointer_turtle.towards(self.current_x, self.current_y)
+        self.pointer_turtle.seth(heading)
+        self.pointer_turtle.goto(self.current_x, self.current_y)
 
     def home(self):
         # returns the turtle  back to the centre of the shape and canvas
         self.history_of_actions.append(self.movement_list_item)
         self.current_y = 0
         self.current_x = 0
-        self.pointer_turtle.goto(self.current_x, self.current_y)
+        self.move_turtle()
+        self.pointer_turtle.seth(0)
 
     def get_distance(self, answer):
         # Sets distance travel to the input
@@ -618,25 +610,26 @@ class PointerTurtle:
         # moves up the turtle the set distance
         self.locate_thy_self()
         self.current_y += self.distance
-        self.pointer_turtle.sety(self.current_y)
+        self.move_turtle()
 
     def move_down(self):
         # moves down the turtle the set distance
         self.locate_thy_self()
         self.current_y -= self.distance
-        self.pointer_turtle.sety(self.current_y)
+        self.move_turtle()
+
 
     def move_right(self):
         # moves the turtle to the right the set distance
         self.locate_thy_self()
         self.current_x += self.distance
-        self.pointer_turtle.setx(self.current_x)
+        self.move_turtle()
 
     def move_left(self):
         # moves the turtle to the left the set distance
         self.locate_thy_self()
         self.current_x -= self.distance
-        self.pointer_turtle.setx(self.current_x)
+        self.move_turtle()
 
     def save_tuple(self):
         # When saving a tuple, make a dot to mark the position
@@ -650,7 +643,9 @@ class PointerTurtle:
 
     def click(self, x, y):
         # when the screen is clicked it will move the turtle there and add that movement to the history_of_actions
-        self.pointer_turtle.goto(x,y)
+        self.current_x = x
+        self.current_y = y
+        self.move_turtle()
         self.locate_thy_self()
 
     def locate_thy_self(self):
