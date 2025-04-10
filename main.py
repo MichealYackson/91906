@@ -104,7 +104,8 @@ class Controller:
         # Uses try except to avoid errors
         answer = input(question)
         try:
-            answer = int(answer)
+            answer = float(answer)
+            answer = int(round(answer, 0))
             self.turtle.get_distance(answer)
         except KeyboardInterrupt:
             exit()
