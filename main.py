@@ -638,7 +638,7 @@ class PointerTurtle:
         self.history_of_actions.pop()
         self.history_of_actions.append("made tuple")
         width = int(round(self.distance / 2, 0))
-        self.pointer_turtle.dot(width, "blue")
+        self.pointer_turtle.dot(width, "black")
         current_tuple = (self.current_x, self.current_y)
         self.tuple_list.append(current_tuple)
 
@@ -656,7 +656,6 @@ class PointerTurtle:
         self.current_y = self.pointer_turtle.ycor()
         self.current_x = self.pointer_turtle.xcor()
         self.set_turtle_colour_properties()
-        print(self.current_x, self.current_y)
         """ this section doesn't work when clicking on the screen
          this error could be due to goto as speed 0 not being fast enough for the turtle to notice it has gone
          beyond the dedicated borders. a fix could be to teleport the turtle first and then drag it back from its
