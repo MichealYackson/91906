@@ -389,7 +389,7 @@ class GUI:
             canvas.master,
             text="Name Shape",
             font=(self.user_font, self.entry_and_text_width),
-            command=self.turtle_properties.set_shape_name
+            command=self.get_name_shape
         )
         rgb_button = tk.Button(
             canvas.master,
@@ -515,6 +515,11 @@ class GUI:
 
         self.turtle_properties.set_file_name(file_name)
 
+    def get_name_shape(self):
+        screen.listen()
+        name = self.shape_name_entry.get()
+        self.turtle_properties.set_shape_name(name)
+
 
 class PointerTurtle:
     def __init__(self, turtle_name, shape_size):
@@ -539,10 +544,6 @@ class PointerTurtle:
         self.history_of_actions = ["set properties after undo"]
         self.movement_list_item = "movement action"
         screen.onscreenclick(self.click)
-
-    def __str__(self):
-        # When called as a string, show the tuple list to the user
-        return str(self.tuple_list)
 
     def clear_turtle(self):
         # essentially resets the location and tuple variables back to what they were in the __init__ for a fresh slate
